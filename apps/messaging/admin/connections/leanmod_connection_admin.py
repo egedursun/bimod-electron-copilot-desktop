@@ -14,4 +14,16 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 
+from django.contrib import admin
 
+from apps.messaging.models import LeanmodConnection
+from apps.messaging.utils import LEANMOD_CONNECTION_ADMIN_LIST, LEANMOD_CONNECTION_ADMIN_FILTER, \
+    LEANMOD_CONNECTION_ADMIN_SEARCH
+
+
+@admin.register(LeanmodConnection)
+class LeanmodConnectionAdmin(admin.ModelAdmin):
+    list_display = LEANMOD_CONNECTION_ADMIN_LIST
+    list_filter = LEANMOD_CONNECTION_ADMIN_FILTER
+    search_fields = LEANMOD_CONNECTION_ADMIN_SEARCH
+    ordering = ["-created_at"]

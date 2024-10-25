@@ -16,3 +16,10 @@
 
 
 from .toggle_copilot_visibility_views import *
+from .assign_leanmod_chat_views import *
+from .assign_assistant_chat_views import *
+from .assign_orchestration_connection_views import *
+from .assign_active_connection_type_views import *
+from .assign_assistant_connection_views import *
+from .assign_leanmod_connection_views import *
+from .assign_orchestration_chat_views import *

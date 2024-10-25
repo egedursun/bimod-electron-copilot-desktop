@@ -14,4 +14,16 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 
+from django.contrib import admin
 
+from apps.messaging.models import ElectronCopilotConfiguration
+from apps.messaging.utils import ELECTRON_COPILOT_CONFIGURATION_ADMIN_LIST, \
+    ELECTRON_COPILOT_CONFIGURATION_ADMIN_FILTER, ELECTRON_COPILOT_CONFIGURATION_ADMIN_SEARCH
+
+
+@admin.register(ElectronCopilotConfiguration)
+class ElectronCopilotConfigurationAdmin(admin.ModelAdmin):
+    list_display = ELECTRON_COPILOT_CONFIGURATION_ADMIN_LIST
+    list_filter = ELECTRON_COPILOT_CONFIGURATION_ADMIN_FILTER
+    search_fields = ELECTRON_COPILOT_CONFIGURATION_ADMIN_SEARCH
+    ordering = ('-last_toggled_is_active_at',)

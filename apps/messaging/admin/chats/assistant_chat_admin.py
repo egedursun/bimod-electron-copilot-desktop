@@ -14,4 +14,17 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 
+from django.contrib import admin
 
+from apps.messaging.models import MultimodalAssistantChat
+from apps.messaging.utils import (MULTIMODAL_ASSISTANT_CHAT_ADMIN_LIST, MULTIMODAL_ASSISTANT_CHAT_ADMIN_FILTER,
+                                  MULTIMODAL_ASSISTANT_CHAT_ADMIN_SEARCH)
+
+
+@admin.register(MultimodalAssistantChat)
+class MultimodalChatAdmin(admin.ModelAdmin):
+    list_display = MULTIMODAL_ASSISTANT_CHAT_ADMIN_LIST
+    list_filter = MULTIMODAL_ASSISTANT_CHAT_ADMIN_FILTER
+    search_fields = MULTIMODAL_ASSISTANT_CHAT_ADMIN_SEARCH
+    ordering = ['-created_at']
+    readonly_fields = ['created_at']

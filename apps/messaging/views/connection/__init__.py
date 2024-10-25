@@ -21,3 +21,6 @@ from .create_orchestration_connection_views import *
 from .remove_leanmod_connection_views import *
 from .remove_assistant_connection_views import *
 from .remove_orchestration_connection_views import *
+from .verify_orchestration_connection_views import *
+from .verify_leanmod_connection_views import *
+from .verify_assistant_connection_views import *

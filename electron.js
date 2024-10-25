@@ -18,21 +18,18 @@ async function waitForServer() {
 
 async function createWindow() {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1280,
+        height: 800,
         webPreferences: {
             nodeIntegration: true,
         },
     });
-
-    // Wait for Django server to be available
     await waitForServer();
     win.loadURL('http://127.0.0.1:8000');
 }
 
 app.whenReady().then(() => {
-    // Start Django server
-    exec("python manage.py runserver", (err, stdout, stderr) => {
+    exec("python3 manage.py runserver", (err, stdout, stderr) => {
         if (err) {
             console.error(`Error starting Django server: ${err}`);
             return;

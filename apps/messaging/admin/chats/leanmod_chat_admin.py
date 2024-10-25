@@ -1,10 +1,10 @@
 #  Copyright (c) 2024 BMD™ Autonomous Holdings. All rights reserved.
 #
 #  Project: Bimod.io™
-#  File: orchestration_connection_admin.py
-#  Last Modified: 2024-10-25 04:30:14
+#  File: leanmod_chat_admin.py
+#  Last Modified: 2024-10-25 15:47:13
 #  Author: Ege Dogan Dursun (Co-Founder & Chief Executive Officer / CEO @ BMD™ Autonomous Holdings)
-#  Created: 2024-10-25 04:30:14
+#  Created: 2024-10-25 15:47:13
 #
 #  This software is proprietary and confidential. Unauthorized copying,
 #  distribution, modification, or use of this software, whether for
@@ -14,16 +14,18 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 
+
 from django.contrib import admin
 
-from apps.messaging.models import OrchestrationConnection
-from apps.messaging.utils import ORCHESTRATION_CONNECTION_ADMIN_LIST, ORCHESTRATION_CONNECTION_ADMIN_FILTER, \
-    ORCHESTRATION_CONNECTION_ADMIN_SEARCH
+from apps.messaging.models import MultimodalLeanmodChat
+from apps.messaging.utils import MULTIMODAL_LEANMOD_CHAT_ADMIN_LIST, MULTIMODAL_LEANMOD_CHAT_ADMIN_FILTER, \
+    MULTIMODAL_LEANMOD_CHAT_ADMIN_SEARCH
 
 
-@admin.register(OrchestrationConnection)
-class OrchestrationConnectionAdmin(admin.ModelAdmin):
-    list_display = ORCHESTRATION_CONNECTION_ADMIN_LIST
-    list_filter = ORCHESTRATION_CONNECTION_ADMIN_FILTER
-    search_fields = ORCHESTRATION_CONNECTION_ADMIN_SEARCH
+@admin.register(MultimodalLeanmodChat)
+class MultimodalChatAdmin(admin.ModelAdmin):
+    list_display = MULTIMODAL_LEANMOD_CHAT_ADMIN_LIST
+    list_filter = MULTIMODAL_LEANMOD_CHAT_ADMIN_FILTER
+    search_fields = MULTIMODAL_LEANMOD_CHAT_ADMIN_SEARCH
     ordering = ['-created_at']
+    readonly_fields = ['created_at']

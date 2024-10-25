@@ -14,4 +14,16 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 
+from django.contrib import admin
 
+from apps.messaging.models import AssistantConnection
+from apps.messaging.utils import ASSISTANT_CONNECTION_ADMIN_LIST, ASSISTANT_CONNECTION_ADMIN_FILTER, \
+    ASSISTANT_CONNECTION_ADMIN_SEARCH
+
+
+@admin.register(AssistantConnection)
+class AssistantConnectionAdmin(admin.ModelAdmin):
+    list_display = ASSISTANT_CONNECTION_ADMIN_LIST
+    list_filter = ASSISTANT_CONNECTION_ADMIN_FILTER
+    search_fields = ASSISTANT_CONNECTION_ADMIN_SEARCH
+    ordering = ['created_at']

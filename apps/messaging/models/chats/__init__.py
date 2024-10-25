@@ -14,5 +14,9 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 
-from .chat_models import *
-from .chat_message_models import *
+from .assistant_chat_models import *
+from .leanmod_chat_models import *
+from .orchestration_chat_models import *
+from .assistant_chat_message_models import *
+from .leanmod_chat_message_models import *
+from .orchestration_chat_message_models import *

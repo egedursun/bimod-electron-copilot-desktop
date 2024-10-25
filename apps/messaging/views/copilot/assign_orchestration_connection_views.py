@@ -1,10 +1,10 @@
 #  Copyright (c) 2024 BMD™ Autonomous Holdings. All rights reserved.
 #
 #  Project: Bimod.io™
-#  File: chat_models.py
-#  Last Modified: 2024-10-25 04:28:04
+#  File: assign_orchestration_connection_views.py
+#  Last Modified: 2024-10-25 16:05:42
 #  Author: Ege Dogan Dursun (Co-Founder & Chief Executive Officer / CEO @ BMD™ Autonomous Holdings)
-#  Created: 2024-10-25 04:28:04
+#  Created: 2024-10-25 16:05:43
 #
 #  This software is proprietary and confidential. Unauthorized copying,
 #  distribution, modification, or use of this software, whether for
@@ -13,4 +13,19 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+import logging
 
+from django.views import View
+from django.contrib import messages
+
+
+logger = logging.getLogger(__name__)
+
+
+class MessagingView_CopilotAssignOrchestrationConnection(View):
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        pass

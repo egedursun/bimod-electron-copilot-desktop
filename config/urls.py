@@ -21,4 +21,7 @@ from web_project.views import SystemView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    ########################################
+    path("", include("apps.messaging.urls")),
+    ########################################
 ]

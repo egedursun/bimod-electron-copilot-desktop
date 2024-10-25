@@ -13,5 +13,19 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+import logging
+
+from django.views import View
+from django.contrib import messages
 
 
+logger = logging.getLogger(__name__)
+
+
+class MessagingView_AssistantConnectionRemove(View):
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        pass
