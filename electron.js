@@ -1,0 +1,52 @@
+const { app, BrowserWindow } = require('electron');
+const { exec } = require('child_process');
+const axios = require('axios');
+
+function checkServer() {
+    return axios.get('http://127.0.0.1:8000')
+        .then(() => true)
+        .catch(() => false);
+}
+
+async function waitForServer() {
+    let serverUp = false;
+    while (!serverUp) {
+        serverUp = await checkServer();
+        if (!serverUp) await new Promise(resolve => setTimeout(resolve, 1000)); // Check every 1 second
+    }
+}
+
+async function createWindow() {
+    const win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true,
+        },
+    });
+
+    // Wait for Django server to be available
+    await waitForServer();
+    win.loadURL('http://127.0.0.1:8000');
+}
+
+app.whenReady().then(() => {
+    // Start Django server
+    exec("python manage.py runserver", (err, stdout, stderr) => {
+        if (err) {
+            console.error(`Error starting Django server: ${err}`);
+            return;
+        }
+        console.log("Django server started:", stdout);
+    });
+
+    createWindow();
+});
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+});
+
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
