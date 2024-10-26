@@ -16,10 +16,12 @@
 
 from django.contrib import admin
 from django.urls import include, path
+from apps.dashboards.views import DashboardView_Index
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     ########################################
+    path("", DashboardView_Index.as_view(template_name="dashboards/index.html"), name="index"),
     path("dashboards/", include("apps.dashboards.urls")),
     path("connections/", include("apps.connections.urls")),
     path("chats/", include("apps.chats.urls")),
