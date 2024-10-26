@@ -41,8 +41,6 @@ class CopilotView_Settings(TemplateView):
 
     def post(self, request, *args, **kwargs):
         copilot_instance = CopilotModal.objects.first()
-
-        # Activation or deactivation
         if 'activate' in request.POST:
             if not copilot_instance:
                 copilot_instance = CopilotModal.objects.create()

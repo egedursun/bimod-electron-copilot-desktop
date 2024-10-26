@@ -1,7 +1,28 @@
-const { app, BrowserWindow } = require('electron');
+/*
+ * Copyright (c) 2024 BMD™ Autonomous Holdings. All rights reserved.
+ *
+ * Project: Bimod.io™
+ * File: electron.js
+ * Last Modified: 2024-10-26 16:33:18
+ * Author: Ege Dogan Dursun (Co-Founder & Chief Executive Officer / CEO @ BMD™ Autonomous Holdings)
+ * Created: 2024-10-26 16:34:15
+ *
+ * This software is proprietary and confidential. Unauthorized copying,
+ * distribution, modification, or use of this software, whether for
+ * commercial, academic, or any other purpose, is strictly prohibited
+ * without the prior express written permission of BMD™ Autonomous
+ * Holdings.
+ *
+ *  For permission inquiries, please contact: admin@Bimod.io.
+ */
+
+const { app, BrowserWindow, screen } = require('electron');
 const { exec } = require('child_process');
 const axios = require('axios');
 const path = require('path');
+
+let mainWindow;
+let floatingButton;
 
 function checkServer() {
     return axios.get('http://127.0.0.1:8080')
@@ -18,7 +39,7 @@ async function waitForServer() {
 }
 
 async function createWindow() {
-    const win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1280,
         height: 800,
         resizable: true,
@@ -27,11 +48,36 @@ async function createWindow() {
         },
         icon: path.join(__dirname, 'assets/img/common/logo.png')
     });
-
-    win.setAspectRatio(1280 / 800);
-
+    mainWindow.setAspectRatio(1280 / 800);
     await waitForServer();
-    win.loadURL('http://127.0.0.1:8080');
+    mainWindow.loadURL('http://127.0.0.1:8080');
+}
+
+async function createFloatingButton() {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  floatingButton = new BrowserWindow({
+    width: 80,
+    height: 80,
+    x: width - 150,
+    y: height - 100,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: true,
+    skipTaskbar: true,
+    resizable: false,
+    hasShadow: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    }
+  });
+
+  await waitForServer();
+  floatingButton.loadURL('http://127.0.0.1:8080/copilot/modal/');
+  floatingButton.setIgnoreMouseEvents(false);
+  if (process.platform === 'darwin') {
+    floatingButton.setAlwaysOnTop(true, 'floating');
+  }
 }
 
 app.whenReady().then(() => {
@@ -44,6 +90,7 @@ app.whenReady().then(() => {
     });
 
     createWindow();
+    // createFloatingButton();
 });
 
 app.on('window-all-closed', () => {
@@ -51,5 +98,8 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+        // createFloatingButton();
+    }
 });

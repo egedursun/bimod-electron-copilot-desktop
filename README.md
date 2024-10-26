@@ -53,19 +53,7 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Create the deployment branch (along with the main).
-- [ ] Build the GitHub workflow files.
-- [ ] Try to deployment actions for the app on GitHub.
 - [ ] Package the application for the platforms.
-
-**RELEASE 1**
-
-- [ ] Implement the always on page floating copilot.
-- [ ] Connect copilot functionality to chats.
-- [ ] Test copilot.
-- [ ] Take the second build of the application.
-
-**RELEASE 2**
 
 - [ ] Start working on features for background data retrieval.
 - [ ] Start working on features for background SSH server creation.

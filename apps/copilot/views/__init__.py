@@ -16,3 +16,5 @@
 
 
 from .copilot_settings_views import *
+from .copilot_message_popup_views import *
+from .copilot_modal_views import *

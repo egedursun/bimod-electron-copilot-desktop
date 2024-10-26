@@ -69,13 +69,23 @@ class DashboardView_Assistant(TemplateView):
             }
             for msg in chat_messages
         ]
+        try:
+            _ = self.get_assistant_response(chat=chat, chat_history=chat_history)
+        except Exception as e:
+            messages.error(request, f"Error while sending the message: {e}")
+            return redirect('dashboards:assistant_dashboard')
+        messages.success(request, "Message sent successfully.")
+        return redirect(f"{request.build_absolute_uri('/dashboards/assistant/')}?chat_id={chat_id}")
 
+    @staticmethod
+    def get_assistant_response(chat, chat_history):
         endpoint = chat.connection.connection_endpoint
         api_key = chat.connection.connection_api_key
         if api_key and "Bearer" not in api_key:
             api_key = f"Bearer {api_key}"
         headers = {"Authorization": f"{api_key}", "Content-Type": "application/json"}
         payload = json.dumps({"chat_history": chat_history})
+        response = ""
         try:
             response = requests.post(endpoint, headers=headers, data=payload)
             response_data = response.json()
@@ -87,10 +97,7 @@ class DashboardView_Assistant(TemplateView):
                         chat=chat, message_role='assistant', message_text=assistant_message
                     )
             else:
-                messages.error(request, "There has been an error while sending the message: "
-                                        f"{response_data.get('message', '')}")
-        except requests.RequestException as e:
-            messages.error(request, f"Error while sending the message: {e}")
-
-        messages.success(request, "Message sent successfully.")
-        return redirect(f"{request.build_absolute_uri('/dashboards/assistant/')}?chat_id={chat_id}")
+                raise requests.RequestException(f"Error {response.status_code}: {response_data.get('message')}")
+        except Exception as e:
+            raise e
+        return response

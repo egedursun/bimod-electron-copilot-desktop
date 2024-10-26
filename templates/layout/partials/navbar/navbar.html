@@ -5,13 +5,10 @@
 <nav class="layout-navbar {{container_class}} navbar navbar-expand-xl {{navbar_detached_class}} align-items-center bg-navbar-theme" id="layout-navbar">
   {% endif %}
 
-  {# Horizontal layout (navbar not detached) #}
-
   {% if not navbar_detached %}
   <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
     <div class="{{container_class}}">
       {% endif %}
-      <!--  Brand demo (display only for navbar-full and hide on below xl) -->
       {% if navbar_full %}
       <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
         <a href="{% url 'dashboards:index' %}" class="app-brand-link">
@@ -29,7 +26,6 @@
       </div>
       {% endif %}
 
-      <!-- ! Not required for layout-without-menu -->
       {% if not navbar_hide_toggle %}
       <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 {{ menu_horizontal|yesno:'d-xl-none,' }} {{ content_navbar|yesno:'d-xl-none,' }}">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -40,17 +36,23 @@
 
       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
       
-        <!-- Admin Panel -->
-          <a class="btn btn-text-secondary btn-icon rounded-pill me-2" href="/admin" target="_blank" title="Refresh page">
-            <i class="ti ti-id-badge-2 ti-md p-1 btn-danger rounded-circle"></i>
-          </a>
-        <!-- / Admin Panel -->
-      
+        <!-- Copilot -->
+        <a class="btn btn-text-secondary btn-icon rounded-pill me-2" onclick="openPopupWindow()" title="Refresh page">
+           <i class="ti ti-robot ti-md p-1 btn-primary rounded-circle"></i>
+        </a>
+        <!-- / Copilot -->
+        
         <!-- Page Refresher -->
           <button class="btn btn-text-secondary btn-icon rounded-pill me-2" onclick="window.location.reload();" title="Refresh page">
             <i class="ti ti-reload ti-md p-1 btn-success rounded-circle"></i>
           </button>
         <!-- / Page Refresher -->
+      
+        <!-- Admin Panel -->
+          <a class="btn btn-text-secondary btn-icon rounded-pill me-2" href="/admin" target="_blank" title="Refresh page">
+            <i class="ti ti-id-badge-2 ti-md p-1 btn-danger rounded-circle"></i>
+          </a>
+        <!-- / Admin Panel -->
 
         <!-- Style Switcher -->
         <div class="navbar-nav align-items-center">
@@ -78,69 +80,6 @@
           </div>
         </div>
         <!-- / Style Switcher-->
-
-        <!-- User
-        <ul class="navbar-nav flex-row align-items-center ms-auto">
-         <li class="nav-item navbar-dropdown dropdown-user dropdown">
-            <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
-              <div class="avatar avatar-online">
-                <img src="{% static 'img/avatars/1.png' %}" alt class="h-auto rounded-circle">
-              </div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li>
-                <a class="dropdown-item" href="javascript:void(0);">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0 me-3">
-                      <div class="avatar avatar-online">
-                        <img src="{% static 'img/avatars/1.png' %}" alt class="h-auto rounded-circle">
-                      </div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <span class="fw-medium d-block">John Doe</span>
-                      <small class="text-muted">Admin</small>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <div class="dropdown-divider"></div>
-              </li>
-              <li>
-                <a class="dropdown-item" href="javascript:void(0);">
-                  <i class="ti ti-user me-3 ti-md"></i>
-                  <span class="align-middle">My Profile</span>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="javascript:void(0);">
-                  <i class="ti ti-settings me-3 ti-md"></i>
-                  <span class="align-middle">Settings</span>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="javascript:void(0);">
-                  <span class="d-flex align-items-center align-middle">
-                    <i class="flex-shrink-0 ti ti-file-dollar me-3 ti-md"></i>
-                    <span class="flex-grow-1 align-middle">Billing</span>
-                    <span class="flex-shrink-0 badge bg-danger d-flex align-items-center justify-content-center">2</span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <div class="dropdown-divider"></div>
-              </li>
-              <li>
-                 <button type="submit" class="btn btn-sm btn-danger d-flex w-100">
-                    <span class="align-middle">Log Out</span>
-                    <i class="ti ti-logout ms-2 ti-14px"></i>
-                  </button>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        -->
-
       </div>
       {% if not navbar_detached %}
     </div>
@@ -149,3 +88,15 @@
   {% if navbar_detached %}
 </nav>
 {% endif %}
+
+{% block page_js %}
+<script>
+    function openPopupWindow() {
+        window.open(
+            '{% url "copilot:modal" %}',
+            'Copilot Chat',
+            'width=75,height=100,resizable=no,scrollbars=no'
+        );
+    }
+</script>
+{% endblock %}
