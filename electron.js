@@ -20,10 +20,15 @@ async function createWindow() {
     const win = new BrowserWindow({
         width: 1280,
         height: 800,
+        resizable: true,
         webPreferences: {
             nodeIntegration: true,
         },
     });
+
+    // Set the aspect ratio (width / height)
+    win.setAspectRatio(1280 / 800);
+
     await waitForServer();
     win.loadURL('http://127.0.0.1:8080');
 }

@@ -56,33 +56,48 @@ sudo npx electron electron.js
 - [ ] Fix image and file sending for assistant chats.
 - [ ] Fix image and file sending for leanmod chats.
 - [ ] Fix image and file sending for orchestration chats.
+
 - [ ] Try to adjust the electron application logo.
 - [ ] Try to take the first build for MacOSX (For testing)
 - [ ] Create the deployment branch (along with the main).
 - [ ] Build the GitHub workflow files.
 - [ ] Try to deployment actions for the app on GitHub.
 - [ ] Package the application for the platforms.
-- [ ] Put the packages in the main (bimod.io) website.
+
+**RELEASE 1**
+
 - [ ] Implement the always on page floating copilot.
 - [ ] Connect copilot functionality to chats.
 - [ ] Test copilot.
 - [ ] Take the second build of the application.
-- [ ] Put the updated version on the website.
+
+**RELEASE 2**
+
 - [ ] Start working on features for background data retrieval.
 - [ ] Start working on features for background SSH server creation.
 - [ ] Try to connect to own computer with assistant connection.
+- [ ] Take the third build of the application.
+- [ ] Put the updated version on the website.
+
+**RELEASE 3**
+
 - [ ] Try listening to audio recordings and speeches (for meeting integration)
 - [ ] If it is working, start working on the MEETING project (KANBAN) on mainframe (bimod.io)
 - [ ] Test the functionality (dashboard kanban topic creation, description creation, task assignment)
-- [ ] Take the third build of the application.
+- [ ] Take the fourth build of the application.
 - [ ] Put the updated version on the website.
+
+**RELEASE 4**
+
 - [ ] Create the automated process to take screenshots and interpret it to understand daily works (Tempo Project)
 - [ ] Create the services and protocols to communicate the tempo.
 - [ ] If working, start working on the TEMPO project, on mainframe (bimod.io).
 - [ ] Test the functionality (tempo inspection, people task summarization, meta-reporting, performance analysis,
 kanban comparison analysis, etc.)
-- [ ] Take the fourth build of the application.
+- [ ] Take the fifth build of the application.
 - [ ] Put the updated version on the website.
+
+**RELEASE 5**
 
 
 ---
