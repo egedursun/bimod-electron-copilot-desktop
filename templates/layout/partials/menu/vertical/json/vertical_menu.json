@@ -4,19 +4,19 @@
       "menu_header": "Chat Dashboards"
     },
     {
-      "name": "Assistant Chat Dashboard",
+      "name": "Assistant Dash",
       "icon": "menu-icon tf-icons ti ti-dashboard",
       "slug": "assistant-chat-dashboard",
       "url": "dashboards:assistant_dashboard"
     },
     {
-      "name": "LeanMod Chat Dashboard",
+      "name": "LeanMod Dash",
       "icon": "menu-icon tf-icons ti ti-dashboard",
       "slug": "leanmod-chat-dashboard",
       "url": "dashboards:leanmod_dashboard"
     },
     {
-      "name": "Orchestration Chat Dashboard",
+      "name": "Orchestration Dash",
       "icon": "menu-icon tf-icons ti ti-dashboard",
       "slug": "orchestration-chat-dashboard",
       "url": "dashboards:orchestration_dashboard"
@@ -25,7 +25,7 @@
       "menu_header": "Services"
     },
     {
-      "name": "Assistant Services",
+      "name": "Assistants",
       "icon": "menu-icon tf-icons ti ti-cloud",
       "slug": "assistant-services",
       "submenu": [
@@ -35,14 +35,14 @@
           "url": "connections:assistant_create"
         },
         {
-          "name": "Disconnect Assistant",
+          "name": "Disconnect Assistants",
           "slug": "assistant-service-disconnect",
           "url": "connections:assistant_remove"
         }
       ]
     },
     {
-      "name": "LeanMod Services",
+      "name": "LeanMods",
       "icon": "menu-icon tf-icons ti ti-cloud",
       "slug": "services",
       "submenu": [
@@ -52,14 +52,14 @@
           "url": "connections:leanmod_create"
         },
         {
-          "name": "Disconnect LeanMod",
+          "name": "Disconnect LeanMods",
           "slug": "leanmod-service-disconnect",
           "url": "connections:leanmod_remove"
         }
       ]
     },
     {
-      "name": "Orchestration Services",
+      "name": "Orchestrations",
       "icon": "menu-icon tf-icons ti ti-cloud",
       "slug": "services",
       "submenu": [
@@ -69,7 +69,7 @@
           "url": "connections:orchestration_create"
         },
         {
-          "name": "Disconnect Orchestration",
+          "name": "Disconnect Orchestrations",
           "slug": "orchestration-service-disconnect",
           "url": "connections:orchestration_remove"
         }
@@ -80,7 +80,7 @@
     },
     {
       "name": "Assistant Chats",
-      "icon": "menu-icon tf-icons ti ti-chat",
+      "icon": "menu-icon tf-icons ti ti-message",
       "slug": "assistant-services",
       "submenu": [
         {
@@ -97,7 +97,7 @@
     },
     {
       "name": "LeanMod Chats",
-      "icon": "menu-icon tf-icons ti ti-chat",
+      "icon": "menu-icon tf-icons ti ti-message",
       "slug": "leanmod-services",
       "submenu": [
         {
@@ -114,7 +114,7 @@
     },
     {
       "name": "Orchestration Chats",
-      "icon": "menu-icon tf-icons ti ti-cloud",
+      "icon": "menu-icon tf-icons ti ti-message",
       "slug": "orchestration-services",
       "submenu": [
         {
@@ -136,7 +136,7 @@
       "name": "Copilot Settings",
       "icon": "menu-icon tf-icons ti ti-settings",
       "slug": "copilot-settings",
-      "url": "messaging:main_manager_panel"
+      "url": "copilot:settings"
     }
   ]
 }

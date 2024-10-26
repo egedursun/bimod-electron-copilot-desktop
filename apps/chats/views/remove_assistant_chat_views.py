@@ -27,21 +27,36 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+
 import logging
 
 from django.contrib import messages
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 
+from apps.chats.models import MultimodalAssistantChat
 from web_project import TemplateLayout
 
 logger = logging.getLogger(__name__)
 
 
 class ChatView_AssistantRemove(TemplateView):
-
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+        context['chats'] = MultimodalAssistantChat.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
-        pass
+        chat_id = request.POST.get('chat_id')
+        if not chat_id:
+            messages.error(request, "No chat ID provided.")
+            return redirect('chats:assistant_remove')
+
+        try:
+            chat = MultimodalAssistantChat.objects.get(id=chat_id)
+            chat.delete()
+            messages.success(request, "Chat instance deleted successfully.")
+        except MultimodalAssistantChat.DoesNotExist:
+            messages.error(request, "Chat instance not found.")
+
+        return redirect('chats:assistant_remove')

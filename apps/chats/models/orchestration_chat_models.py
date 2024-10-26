@@ -33,18 +33,14 @@ from django.db import models
 
 
 class MultimodalOrchestrationChat(models.Model):
+    uuid = models.CharField(max_length=1000, null=True, blank=True)
     connection = models.ForeignKey('connections.OrchestrationConnection', on_delete=models.CASCADE,
                                    related_name='multimodal_orchestration_chats', null=True, blank=True)
-
-    organization_name = models.CharField(max_length=10000, blank=True, null=True)
-    agent_name = models.CharField(max_length=10000, blank=True, null=True)
-    chat_name = models.CharField(max_length=10000, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.organization_name + " - " + self.agent_name + " - " + self.chat_name + " - " + self.created_at.strftime(
-            "%Y-%m-%d %H:%M:%S")
+        return self.uuid + " - " + self.created_at.strftime("%Y-%m-%d %H:%M:%S")
 
     class Meta:
         verbose_name = "Multimodal Orchestration Chat"

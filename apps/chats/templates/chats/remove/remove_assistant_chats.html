@@ -1,0 +1,146 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}Manage Assistant Chats{% endblock %}
+
+{% block vendor_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/libs/sweetalert2/sweetalert2.css' %}"/>
+{% endblock %}
+
+{% block vendor_js %}
+  {{ block.super }}
+  <script src="{% static 'vendor/libs/sweetalert2/sweetalert2.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h3><strong>
+          <i class="fa fa-comments me-2"></i> Manage Assistant Chats</strong></h3>
+      </div>
+      <div class="card-body">
+
+        <!-- Tip Section -->
+        <div class="tips-section alert alert-secondary alert-dismissible d-flex col-lg-12 align-items-center" role="alert">
+          <img src="{% static 'img/custom-illustrations-v2/i2-58.png' %}" width="25%" class="me-8 rounded" alt="Illustration for tip">
+          <div class="d-flex flex-column ps-1">
+            <h5 class="alert-heading mb-2">Tip</h5>
+            <p class="mb-0">
+              This page lists all existing assistant chats. Click the delete button next to any chat to remove it permanently after confirmation.
+            </p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+
+        <!-- Messages Section -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <hr>
+
+        <!-- Chats List -->
+        <div class="table-responsive">
+          <h5><i class="fa fa-comments me-2 mb-4"></i><strong>Assistant Chats</strong></h5>
+          <table id="chatsTable" class="table table-striped mt-4">
+            <thead>
+              <tr>
+                <th>UUID</th>
+                <th>Connection Endpoint</th>
+                <th>Created At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for chat in chats %}
+                <tr>
+                  <td><strong>{{ chat.uuid }}</strong></td>
+                  <td>{{ chat.connection.connection_endpoint }}</td>
+                  <td>{{ chat.created_at|date:"Y-m-d H:i" }}</td>
+                  <td>
+                    <!-- DELETE BUTTON -->
+                    <button type="button" class="btn btn-danger btn-sm chat-delete-btn"
+                            data-url="{% url 'chats:assistant_remove' %}"
+                            data-chat-id="{{ chat.id }}">
+                      <i class="fa fa-trash me-2"></i> <strong>Delete</strong>
+                    </button>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="4">
+                    <div class="alert alert-warning p-4 mt-4" role="alert">
+                      <i class="fa fa-exclamation-triangle me-2"></i>
+                      <strong>No assistant chats available.</strong>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block page_js %}
+  {{ block.super }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // DELETE BUTTON LOGIC
+      document.querySelectorAll('.chat-delete-btn').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+          event.preventDefault();
+          const deleteUrl = button.getAttribute('data-url');
+          const chatId = button.getAttribute('data-chat-id');
+
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'This chat will be permanently deleted.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            customClass: {
+              confirmButton: 'btn btn-danger me-2',
+              cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+          }).then((result) => {
+            if (result.isConfirmed) {
+              const form = document.createElement('form');
+              form.method = 'POST';
+              form.action = deleteUrl;
+
+              // CSRF token
+              const csrfInput = document.createElement('input');
+              csrfInput.type = 'hidden';
+              csrfInput.name = 'csrfmiddlewaretoken';
+              csrfInput.value = '{{ csrf_token }}';
+              form.appendChild(csrfInput);
+
+              // Chat ID
+              const chatIdInput = document.createElement('input');
+              chatIdInput.type = 'hidden';
+              chatIdInput.name = 'chat_id';
+              chatIdInput.value = chatId;
+              form.appendChild(chatIdInput);
+
+              document.body.appendChild(form);
+              form.submit();
+            }
+          });
+        });
+      });
+    });
+  </script>
+{% endblock %}

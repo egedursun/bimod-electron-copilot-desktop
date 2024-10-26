@@ -39,7 +39,7 @@ TEMPLATE_CONFIG = {
 THEME_VARIABLES = {
     "creator_name": "BimodLab Desktop Copilot Client",
     "creator_url": "https://www.bimod.io/",
-    "template_name": "Bimod.io",
+    "template_name": "Bimod Electron",
     "template_suffix": "Bimod.io - Intelligent Assistant as a Service (AIaaS)",
     "template_version": "2.0.0",
     "template_free": False,

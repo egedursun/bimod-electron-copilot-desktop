@@ -1,0 +1,83 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}Create Orchestration Chat{% endblock %}
+
+{% block vendor_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/libs/select2/select2.css' %}"/>
+{% endblock %}
+
+{% block vendor_js %}
+  {{ block.super }}
+  <script src="{% static 'vendor/libs/select2/select2.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h3><strong>
+          <i class="fa fa-comments me-2"></i> Create Orchestration Chat</strong></h3>
+      </div>
+      <div class="card-body">
+
+        <!-- Tip Section -->
+        <div class="tips-section alert alert-secondary alert-dismissible d-flex col-lg-12 align-items-center" role="alert">
+          <img src="{% static 'img/custom-illustrations-v2/i2-32.png' %}" width="25%" class="me-8 rounded" alt="Illustration for tip">
+          <div class="d-flex flex-column ps-1">
+            <h5 class="alert-heading mb-2">Tip</h5>
+            <p class="mb-0">
+              Use this form to create a new Orchestration chat instance. Select an existing Orchestration connection, and a unique identifier will be generated automatically.
+            </p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+
+        <!-- Messages Section -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <hr>
+
+        <!-- Create Chat Form -->
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-4">
+            <label for="connection" class="form-label">Select Orchestration Connection</label>
+            <select class="form-select select2" id="connection" name="connection" required>
+              <option value="" disabled selected>Select an Orchestration connection</option>
+              {% for connection in connections %}
+                <option value="{{ connection.id }}">{{ connection.connection_endpoint }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-4 w-25">
+            <strong><i class="fa fa-plus me-2"></i> Create Chat</strong>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block page_js %}
+  {{ block.super }}
+  <script>
+    $(document).ready(function() {
+      $('#connection').select2({
+        placeholder: 'Select an Orchestration connection',
+        allowClear: true,
+        width: '100%'
+      });
+    });
+  </script>
+{% endblock %}

@@ -1,1 +1,146 @@
+{% extends layout_path %}
 
+{% load static %}
+{% load i18n %}
+
+{% block title %}Manage Orchestration Connections{% endblock %}
+
+{% block vendor_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/libs/sweetalert2/sweetalert2.css' %}"/>
+{% endblock %}
+
+{% block vendor_js %}
+  {{ block.super }}
+  <script src="{% static 'vendor/libs/sweetalert2/sweetalert2.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h3><strong>
+          <i class="fa fa-network-wired me-2"></i> Manage Orchestration Connections</strong></h3>
+      </div>
+      <div class="card-body">
+
+        <!-- Tip Section -->
+        <div class="tips-section alert alert-secondary alert-dismissible d-flex col-lg-12 align-items-center" role="alert">
+          <img src="{% static 'img/custom-illustrations-v2/i2-71.png' %}" width="25%" class="me-8 rounded" alt="Illustration for tip">
+          <div class="d-flex flex-column ps-1">
+            <h5 class="alert-heading mb-2">Tip</h5>
+            <p class="mb-0">
+              Use this page to manage your Orchestration connections. You can delete any connection by clicking the delete button.
+            </p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+
+        <!-- Messages Section -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <hr>
+
+        <!-- Connections List -->
+        <div class="table-responsive">
+          <h5><i class="fa fa-network-wired me-2 mb-4"></i><strong>Connections</strong></h5>
+          <table id="connectionsTable" class="table table-striped mt-4">
+            <thead>
+            <tr>
+              <th>Connection Endpoint</th>
+              <th>Public</th>
+              <th>Created At</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for connection in connections %}
+              <tr>
+                <td><strong>{{ connection.connection_endpoint }}</strong></td>
+                <td>{{ connection.connection_is_public|yesno:"Yes,No" }}</td>
+                <td>{{ connection.created_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                  <!-- DELETE BUTTON -->
+                  <button type="button" class="btn btn-danger btn-sm connection-delete-btn"
+                          data-url="{% url 'connections:orchestration_remove' %}"
+                          data-connection-id="{{ connection.id }}">
+                    <i class="fa fa-trash me-2"></i> <strong>Delete</strong>
+                  </button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4">
+                  <div class="alert alert-warning p-4 mt-4" role="alert">
+                    <i class="fa fa-exclamation-triangle me-2"></i>
+                    <strong>No connections available.</strong>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block page_js %}
+  {{ block.super }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // DELETE BUTTON LOGIC
+      document.querySelectorAll('.connection-delete-btn').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+          event.preventDefault();
+          const deleteUrl = button.getAttribute('data-url');
+          const connectionId = button.getAttribute('data-connection-id');
+
+          Swal.fire({
+            title: 'Are you sure?',
+            text: 'This connection will be permanently deleted.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            customClass: {
+              confirmButton: 'btn btn-danger me-2',
+              cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+          }).then((result) => {
+            if (result.isConfirmed) {
+              const form = document.createElement('form');
+              form.method = 'POST';
+              form.action = deleteUrl;
+
+              // CSRF token
+              const csrfInput = document.createElement('input');
+              csrfInput.type = 'hidden';
+              csrfInput.name = 'csrfmiddlewaretoken';
+              csrfInput.value = '{{ csrf_token }}';
+              form.appendChild(csrfInput);
+
+              // Connection ID
+              const connectionIdInput = document.createElement('input');
+              connectionIdInput.type = 'hidden';
+              connectionIdInput.name = 'connection_id';
+              connectionIdInput.value = connectionId;
+              form.appendChild(connectionIdInput);
+
+              document.body.appendChild(form);
+              form.submit();
+            }
+          });
+        });
+      });
+    });
+  </script>
+{% endblock %}

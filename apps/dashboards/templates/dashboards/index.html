@@ -1,0 +1,105 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}BimodLab Electron Copilot | Your AI Assistant, Now on Desktop{% endblock %}
+
+{% block vendor_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'vendor/libs/nouislider/nouislider.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/swiper/swiper.css' %}" />
+{% endblock vendor_css %}
+
+{% block vendor_js %}
+    {{ block.super }}
+    <script src="{% static 'vendor/libs/nouislider/nouislider.js' %}"></script>
+    <script src="{% static 'vendor/libs/swiper/swiper.js' %}"></script>
+{% endblock vendor_js %}
+
+{% block page_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'vendor/css/pages/front-page-landing.css' %}">
+{% endblock page_css %}
+
+{% block page_js %}
+    {{ block.super }}
+    <script src="{% static 'js/front-page-landing.js' %}"></script>
+{% endblock page_js %}
+
+{% block content %}
+<div class="scrollspy-example">
+    <!-- Hero: Start -->
+    <div>
+      <img src="{% static 'img/messaging/b-2.png' %}" alt="AI assistant icon" class="w-100 rounded"/>
+    </div>
+    <section id="hero-animation" class="rounded">
+      <div id="landingHero" class="section-py landing-hero position-relative">
+        <img src="{% static 'img/front-pages/backgrounds/hero-bg.png' %}" alt="hero background"
+             class="position-absolute top-0 start-50 translate-middle-x object-fit-cover w-100 h-100" data-speed="1"/>
+        <div class="container" style="margin-top: -130px;">
+          <div class="hero-text-box text-center position-relative">
+            <h1 class="text-primary hero-title display-1 fw-extrabold" style="font-size: 4.5vw;">
+              <strong>BimodLab<span style="vertical-align: super; font-size: xx-large; font-family: Arial, sans-serif;">&#8482;</span> Electron Copilot</strong></h1>
+            <h2 class="text-primary hero-title display-6 fw-extrabold mt-4" style="font-size: 1.5vw;">
+              Your Desktop Assistant<br>for Seamless AI Workflows
+            </h2>
+            <p class="hero-sub-title h6 mt-8" style="font-size: 1vw;">
+              Manage your AI tasks with a powerful, streamlined desktop application. <br> Enjoy enhanced security, real-time control, and full integration with <strong>BimodLab Web Application</strong>.
+            </p>
+            <div class="landing-hero-btn d-inline-block position-relative mt-4">
+              <a href="https://www.bimod.io/" class="btn btn-primary btn-sm" style="min-width: 20vw;">
+                <strong>
+                  <i class="fa fa-rocket me-2"></i>
+                  Teleport to BimodLab
+                </strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Hero: End -->
+
+    <!-- Key Features Section -->
+    <section id="features" class="section-py landing-features bg-body">
+        <div class="container">
+            <div class="text-center mb-4">
+              <span class="badge bg-label-primary"><strong>Core Features</strong></span>
+            </div>
+            <h4 class="text-center mb-1">
+                <span class="position-relative fw-extrabold z-1">BimodLab<span style="vertical-align: super; font-size: small; font-family: Arial, sans-serif;">&#8482;</span> Electron Copilot:
+                  <img src="{% static 'img/front-pages/icons/section-title-icon.png' %}" alt="AI assistant icon"
+                       class="section-title-img position-absolute object-fit-contain bottom-0 z-n1">
+                </span>
+                AI-Enhanced Assistance on Desktop
+            </h4>
+            <p class="text-center mb-5">Maximize your productivity with Electron Copilot's powerful features:</p>
+            <div class="row gy-6 mt-8">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <img src="{% static 'img/custom-illustrations-v2/i2-18.png' %}" alt="Real-Time AI Control" class="mb-4 rounded" width="160px" />
+                    <h5 class="fw-bold">Real-Time AI Control &amp; Communication</h5>
+                    <p>
+                      Manage your AI assistants, LeanMod assistants, and orchestrations with precision and speed from your desktop.
+                      Enjoy real-time control and monitoring of your AI workflows.
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <img src="{% static 'img/custom-illustrations-v2/i2-34.png' %}" alt="Secure Local Data Access" class="mb-4 rounded" width="160px" />
+                    <h5 class="fw-bold">Secure Local Data Access &amp; Management</h5>
+                    <p>
+                      Enjoy enhanced security and privacy by accessing sensitive data locally on your device and benefiting the advantages.
+                      See ten steps further with the power of AI.
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <img src="{% static 'img/custom-illustrations-v2/i2-64.png' %}" alt="Smooth Integration" class="mb-4 rounded" width="160px" />
+                    <h5 class="fw-bold">Project Management, Meetings &amp; Tempo</h5>
+                    <p>Stay on top of your projects, track and records meetings, and seamlessly track your tempo with
+                      integration of BimodLab Web Application and Electron Copilot to empower your workflow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

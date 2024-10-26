@@ -1,0 +1,183 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}Copilot Settings{% endblock %}
+
+{% block vendor_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/libs/select2/select2.css' %}"/>
+{% endblock %}
+
+{% block vendor_js %}
+  {{ block.super }}
+  <script src="{% static 'vendor/libs/select2/select2.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h3><strong>
+          <i class="fa fa-cog me-2"></i> Copilot Settings</strong></h3>
+      </div>
+      <div class="card-body">
+
+        <!-- Display Messages -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <!-- Activation/Deactivation Section -->
+        {% if copilot_instance %}
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="deactivate" class="btn btn-danger mt-4 w-25">
+              <i class="fa fa-power-off me-2"></i> Deactivate Copilot
+            </button>
+          </form>
+
+          <!-- Toggle for Temporary Activation -->
+          <div class="mt-4">
+            <label for="is_active" class="form-label"><strong>Temporarily Activate / Deactivate</strong></label>
+            <div class="col-2">
+              <label class="switch switch-square switch-lg mt-2">
+                <input type="checkbox" class="switch-input" id="is_active" name="is_active" form="copilotForm" {% if copilot_instance.is_active %}checked{% endif %}>
+                <span class="switch-toggle-slider">
+                  <span class="switch-on"><i class="ti ti-check"></i></span>
+                  <span class="switch-off"><i class="ti ti-x"></i></span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Settings Form -->
+          <form method="post" id="copilotForm" class="mt-4">
+            {% csrf_token %}
+            <input type="hidden" name="activate" value="1">
+
+            <!-- Default Service Type Picker -->
+            <div class="mb-4">
+              <label for="active_connection_type" class="form-label"><strong>Default Service Type</strong></label>
+              <select class="form-select select2" id="active_connection_type" name="active_connection_type" required>
+                {% for value, label in copilot_connection_types %}
+                  <option value="{{ value }}" {% if copilot_instance.active_connection_type == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Service and Chat Pickers -->
+            <div class="row">
+              <!-- Assistant Service Picker -->
+              <div class="col-md-4 mb-4 assistant-picker">
+                <label for="selected_assistant" class="form-label">Select Assistant</label>
+                <select class="form-select select2" id="selected_assistant" name="selected_assistant" {% if not assistant_connections %}disabled{% endif %}>
+                  <option value="" disabled selected>Select an Assistant Connection</option>
+                  {% for connection in assistant_connections %}
+                    <option value="{{ connection.id }}" {% if copilot_instance.selected_assistant_id == connection.id %}selected{% endif %}>{{ connection.connection_endpoint }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-4 assistant-chat-picker">
+                <label for="selected_assistant_chat" class="form-label">Select Assistant Chat</label>
+                <select class="form-select select2" id="selected_assistant_chat" name="selected_assistant_chat" {% if not assistant_chats %}disabled{% endif %}>
+                  <option value="" disabled selected>Select an Assistant Chat</option>
+                  {% for chat in assistant_chats %}
+                    <option value="{{ chat.id }}" {% if copilot_instance.selected_assistant_chat_id == chat.id %}selected{% endif %}>{{ chat.uuid }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <!-- LeanMod Service Picker -->
+              <div class="col-md-4 mb-4 leanmod-picker">
+                <label for="selected_leanmod" class="form-label">Select LeanMod</label>
+                <select class="form-select select2" id="selected_leanmod" name="selected_leanmod" {% if not leanmod_connections %}disabled{% endif %}>
+                  <option value="" disabled selected>Select a LeanMod Connection</option>
+                  {% for connection in leanmod_connections %}
+                    <option value="{{ connection.id }}" {% if copilot_instance.selected_leanmod_id == connection.id %}selected{% endif %}>{{ connection.connection_endpoint }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-4 leanmod-chat-picker">
+                <label for="selected_leanmod_chat" class="form-label">Select LeanMod Chat</label>
+                <select class="form-select select2" id="selected_leanmod_chat" name="selected_leanmod_chat" {% if not leanmod_chats %}disabled{% endif %}>
+                  <option value="" disabled selected>Select a LeanMod Chat</option>
+                  {% for chat in leanmod_chats %}
+                    <option value="{{ chat.id }}" {% if copilot_instance.selected_leanmod_chat_id == chat.id %}selected{% endif %}>{{ chat.uuid }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <!-- Orchestration Service Picker -->
+              <div class="col-md-4 mb-4 orchestration-picker">
+                <label for="selected_orchestration" class="form-label">Select Orchestration</label>
+                <select class="form-select select2" id="selected_orchestration" name="selected_orchestration" {% if not orchestration_connections %}disabled{% endif %}>
+                  <option value="" disabled selected>Select an Orchestration Connection</option>
+                  {% for connection in orchestration_connections %}
+                    <option value="{{ connection.id }}" {% if copilot_instance.selected_orchestration_id == connection.id %}selected{% endif %}>{{ connection.connection_endpoint }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-4 orchestration-chat-picker">
+                <label for="selected_orchestration_chat" class="form-label">Select Orchestration Chat</label>
+                <select class="form-select select2" id="selected_orchestration_chat" name="selected_orchestration_chat" {% if not orchestration_chats %}disabled{% endif %}>
+                  <option value="" disabled selected>Select an Orchestration Chat</option>
+                  {% for chat in orchestration_chats %}
+                    <option value="{{ chat.id }}" {% if copilot_instance.selected_orchestration_chat_id == chat.id %}selected{% endif %}>{{ chat.uuid }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4 w-25">
+              <strong>Save Settings</strong>
+            </button>
+          </form>
+        {% else %}
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="activate" class="btn btn-primary mt-4 w-25">
+              <i class="fa fa-power-off me-2"></i> Activate Copilot
+            </button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block page_js %}
+  {{ block.super }}
+  <script>
+    $(document).ready(function() {
+      $('.select2').select2({ width: '100%' });
+
+      // Toggle required fields based on selected service type
+      $('#active_connection_type').on('change', function () {
+        const type = $(this).val();
+        $('.assistant-picker, .assistant-chat-picker, .leanmod-picker, .leanmod-chat-picker, .orchestration-picker, .orchestration-chat-picker').hide();
+        $(`.${type}-picker, .${type}-chat-picker`).show();
+      }).trigger('change');
+
+      // Form submission validation
+      $('#copilotForm').on('submit', function (e) {
+        const type = $('#active_connection_type').val();
+        const connection = $(`#selected_${type}`).val();
+        const chat = $(`#selected_${type}_chat`).val();
+
+        if (!connection || !chat) {
+          e.preventDefault();
+          alert(`Please select both a ${type} connection and chat.`);
+        }
+      });
+    });
+  </script>
+{% endblock %}

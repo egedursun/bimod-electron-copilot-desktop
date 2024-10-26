@@ -1,1 +1,103 @@
+{% extends layout_path %}
 
+{% load static %}
+{% load i18n %}
+
+{% block title %}Create LeanMod Connection{% endblock %}
+
+{% block vendor_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/libs/select2/select2.css' %}"/>
+{% endblock %}
+
+{% block vendor_js %}
+  {{ block.super }}
+  <script src="{% static 'vendor/libs/select2/select2.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xl mb-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0"><strong>
+          <i class="fa fa-cogs me-2"></i>
+          Create LeanMod Connection</strong></h5>
+      </div>
+      <div class="card-body">
+
+        <!-- Alert Tip Section -->
+        <div class="tips-section alert alert-secondary alert-dismissible d-flex col-lg-12 align-items-center"
+             role="alert">
+          <img src="{% static 'img/custom-illustrations-v2/i2-65.png' %}" width="25%" style="border-radius:25px;"
+               class="justify-content-end me-8 rounded" alt="Illustration for tip">
+          <span class="alert-icon rounded">
+            <i class="ti ti-bookmark"></i>
+          </span>
+          <div class="d-flex flex-column ps-1">
+            <h5 class="alert-heading mb-2">Tip</h5>
+            <p class="mb-0">
+              You can create a new LeanMod connection here. Fill in the required fields and specify if the connection is public or private.
+            </p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+
+        <!-- Messages Section -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+          <div class="row p-8">
+            <div class="col-12 mb-4">
+              <label class="form-label" for="connection_endpoint">Connection Endpoint</label>
+              <input type="text" class="form-control" id="connection_endpoint" name="connection_endpoint"
+                     placeholder="Enter connection endpoint" required>
+            </div>
+            <div class="col-12 mb-4" id="apiKeyField">
+              <label class="form-label" for="connection_api_key">API Key</label>
+              <input type="text" class="form-control" id="connection_api_key" name="connection_api_key"
+                     placeholder="Enter API key if required">
+            </div>
+            <div class="col-4 mb-4 btn-primary ms-3 p-4 mt-2 rounded">
+              <label class="form-label me-4" for="connection_is_public"><strong class="text-white">Public Endpoint</strong></label>
+              <label class="switch switch-square switch-success switch-lg">
+                <input type="checkbox" class="switch-input" id="connection_is_public" name="connection_is_public">
+                <span class="switch-toggle-slider">
+                  <span class="switch-on"><i class="ti ti-check"></i></span>
+                  <span class="switch-off"><i class="ti ti-x"></i></span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <hr>
+          <button type="submit" class="btn btn-success mt-4 w-25"><strong>
+            <i class="ti ti-plus me-2"></i>
+            Create Connection
+          </strong></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const connectionIsPublicCheckbox = document.getElementById('connection_is_public');
+    const apiKeyField = document.getElementById('apiKeyField');
+
+    // Default state: API Key visible if not public
+    apiKeyField.style.display = connectionIsPublicCheckbox.checked ? 'none' : 'block';
+
+    connectionIsPublicCheckbox.addEventListener('change', function () {
+      apiKeyField.style.display = this.checked ? 'none' : 'block';
+    });
+  });
+</script>
+{% endblock %}

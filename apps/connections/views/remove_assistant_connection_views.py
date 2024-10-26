@@ -30,18 +30,32 @@
 import logging
 
 from django.contrib import messages
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 
+from apps.connections.models import AssistantConnection
 from web_project import TemplateLayout
 
 logger = logging.getLogger(__name__)
 
 
 class ConnectionView_AssistantRemove(TemplateView):
-
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+        context['connections'] = AssistantConnection.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
-        pass
+        connection_id = request.POST.get('connection_id')
+
+        if connection_id:
+            try:
+                connection = AssistantConnection.objects.get(id=connection_id)
+                connection.delete()
+                messages.success(request, "Assistant connection successfully deleted.")
+            except AssistantConnection.DoesNotExist:
+                messages.error(request, "Assistant connection not found.")
+        else:
+            messages.error(request, "No Assistant connection ID provided.")
+
+        return redirect('connections:assistant_remove')

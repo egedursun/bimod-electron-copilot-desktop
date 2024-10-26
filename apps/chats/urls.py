@@ -30,14 +30,18 @@ urlpatterns = [
          ), name='assistant_remove'),
 
     path('leanmod/create/',
-         ChatView_LeanmodCreate.as_view(), name='leanmod_create'),
+         ChatView_LeanmodCreate.as_view(
+                template_name='chats/create/create_leanmod_chat.html'
+         ), name='leanmod_create'),
     path('leanmod/remove/',
          ChatView_LeanmodRemove.as_view(
              template_name='chats/remove/remove_leanmod_chats.html'
          ), name='leanmod_remove'),
 
     path('orchestration/create/',
-         ChatView_OrchestrationCreate.as_view(), name='orchestration_create'),
+         ChatView_OrchestrationCreate.as_view(
+                template_name='chats/create/create_orchestration_chat.html'
+         ), name='orchestration_create'),
     path('orchestration/remove/',
          ChatView_OrchestrationRemove.as_view(
              template_name='chats/remove/remove_orchestration_chats.html'

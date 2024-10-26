@@ -16,19 +16,19 @@
 
 
 ASSISTANT_CONNECTION_ADMIN_LIST = ['connection_endpoint', 'connection_is_public', 'connection_api_key',
-                                   'connection_agent_name', 'created_at']
+                                   'created_at']
 ASSISTANT_CONNECTION_ADMIN_FILTER = ['connection_is_public', 'created_at']
-ASSISTANT_CONNECTION_ADMIN_SEARCH = ['connection_endpoint', 'connection_agent_name', 'connection_agent_description']
+ASSISTANT_CONNECTION_ADMIN_SEARCH = ['connection_endpoint', 'connection_api_key', 'created_at']
 
 LEANMOD_CONNECTION_ADMIN_LIST = ["connection_endpoint", "connection_is_public", "connection_api_key",
-                                 "connection_agent_name", "created_at"]
+                                 "created_at"]
 LEANMOD_CONNECTION_ADMIN_FILTER = ["connection_is_public", "created_at"]
-LEANMOD_CONNECTION_ADMIN_SEARCH = ["connection_endpoint", "connection_api_key", "connection_agent_name", "created_at"]
+LEANMOD_CONNECTION_ADMIN_SEARCH = ["connection_endpoint", "connection_api_key", "created_at"]
 
 ORCHESTRATION_CONNECTION_ADMIN_LIST = ['connection_endpoint', 'connection_is_public', 'connection_api_key',
-                                       'connection_agent_name', 'created_at']
+                                       'created_at']
 ORCHESTRATION_CONNECTION_ADMIN_FILTER = ['connection_is_public', 'created_at']
-ORCHESTRATION_CONNECTION_ADMIN_SEARCH = ['connection_endpoint', 'connection_agent_name']
+ORCHESTRATION_CONNECTION_ADMIN_SEARCH = ['connection_endpoint', 'connection_api_key', 'created_at']
 
 CONNECTION_TYPES = [
     ('assistant', 'Assistant'),

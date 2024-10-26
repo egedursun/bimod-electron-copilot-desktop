@@ -15,17 +15,17 @@
 #   For permission inquiries, please contact: admin@Bimod.io.
 
 
-MULTIMODAL_ASSISTANT_CHAT_ADMIN_LIST = ['organization_name', 'agent_name', 'chat_name', 'created_at']
-MULTIMODAL_ASSISTANT_CHAT_ADMIN_FILTER = ['organization_name', 'agent_name', 'chat_name', 'created_at']
-MULTIMODAL_ASSISTANT_CHAT_ADMIN_SEARCH = ['organization_name', 'agent_name', 'chat_name', 'created_at']
+MULTIMODAL_ASSISTANT_CHAT_ADMIN_LIST = ['uuid', 'created_at']
+MULTIMODAL_ASSISTANT_CHAT_ADMIN_FILTER = ['uuid', 'created_at']
+MULTIMODAL_ASSISTANT_CHAT_ADMIN_SEARCH = ['uuid', 'created_at']
 
-MULTIMODAL_LEANMOD_CHAT_ADMIN_LIST = ['organization_name', 'agent_name', 'chat_name', 'created_at']
-MULTIMODAL_LEANMOD_CHAT_ADMIN_FILTER = ['organization_name', 'agent_name', 'chat_name', 'created_at']
-MULTIMODAL_LEANMOD_CHAT_ADMIN_SEARCH = ['organization_name', 'agent_name', 'chat_name', 'created_at']
+MULTIMODAL_LEANMOD_CHAT_ADMIN_LIST = ['uuid', 'created_at']
+MULTIMODAL_LEANMOD_CHAT_ADMIN_FILTER = ['uuid', 'created_at']
+MULTIMODAL_LEANMOD_CHAT_ADMIN_SEARCH = ['uuid', 'created_at']
 
-MULTIMODAL_ORCHESTRATION_CHAT_ADMIN_LIST = ['organization_name', 'agent_name', 'chat_name', 'created_at']
-MULTIMODAL_ORCHESTRATION_CHAT_ADMIN_FILTER = ['organization_name', 'agent_name', 'chat_name', 'created_at']
-MULTIMODAL_ORCHESTRATION_CHAT_ADMIN_SEARCH = ['organization_name', 'agent_name', 'chat_name', 'created_at']
+MULTIMODAL_ORCHESTRATION_CHAT_ADMIN_LIST = ['uuid', 'created_at']
+MULTIMODAL_ORCHESTRATION_CHAT_ADMIN_FILTER = ['uuid', 'created_at']
+MULTIMODAL_ORCHESTRATION_CHAT_ADMIN_SEARCH = ['uuid', 'created_at']
 
 MULTIMODAL_ASSISTANT_CHAT_MESSAGE_ADMIN_LIST = ('chat', 'message_role', 'sent_at')
 MULTIMODAL_ASSISTANT_CHAT_MESSAGE_ADMIN_FILTER = ('chat', 'message_role', 'sent_at')

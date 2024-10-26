@@ -31,18 +31,32 @@
 import logging
 
 from django.contrib import messages
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 
+from apps.chats.models import MultimodalLeanmodChat
 from web_project import TemplateLayout
 
 logger = logging.getLogger(__name__)
 
 
 class ChatView_LeanmodRemove(TemplateView):
-
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+        context['chats'] = MultimodalLeanmodChat.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
-        pass
+        chat_id = request.POST.get('chat_id')
+        if not chat_id:
+            messages.error(request, "No chat ID provided.")
+            return redirect('chats:leanmod_remove')
+
+        try:
+            chat = MultimodalLeanmodChat.objects.get(id=chat_id)
+            chat.delete()
+            messages.success(request, "LeanMod Chat instance deleted successfully.")
+        except MultimodalLeanmodChat.DoesNotExist:
+            messages.error(request, "LeanMod Chat instance not found.")
+
+        return redirect('chats:leanmod_remove')
