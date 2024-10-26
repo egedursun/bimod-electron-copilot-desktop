@@ -47,6 +47,10 @@
 
         <hr>
 
+        <img src="{% static 'img/common/elc-3.png' %}" class="rounded" style="width: 100%;" alt="Illustration for tips">
+
+        <hr>
+
         <!-- Create Chat Form -->
         <form method="post">
           {% csrf_token %}
@@ -60,7 +64,7 @@
             </select>
           </div>
 
-          <button type="submit" class="btn btn-primary mt-4 w-25">
+          <button type="submit" class="btn btn-success mt-4 w-25">
             <strong><i class="fa fa-plus me-2"></i> Create Chat</strong>
           </button>
         </form>

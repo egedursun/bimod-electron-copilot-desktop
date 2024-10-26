@@ -33,6 +33,14 @@
           {% endfor %}
         {% endif %}
 
+        <hr>
+
+        <img src="{% static 'img/common/elc-13.png' %}" class="rounded" style="width: 100%;" alt="Illustration for tips">
+
+        <hr>
+
+
+
         <!-- Activation/Deactivation Section -->
         {% if copilot_instance %}
           <form method="post">
@@ -41,6 +49,8 @@
               <i class="fa fa-power-off me-2"></i> Deactivate Copilot
             </button>
           </form>
+
+          <hr>
 
           <!-- Toggle for Temporary Activation -->
           <div class="mt-4">
@@ -146,10 +156,11 @@
         {% else %}
           <form method="post">
             {% csrf_token %}
-            <button type="submit" name="activate" class="btn btn-primary mt-4 w-25">
+            <button type="submit" name="activate" class="btn btn-success mt-4 w-25">
               <i class="fa fa-power-off me-2"></i> Activate Copilot
             </button>
           </form>
+          <hr>
         {% endif %}
       </div>
     </div>

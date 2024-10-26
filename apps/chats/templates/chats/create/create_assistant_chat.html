@@ -23,7 +23,6 @@
           <i class="fa fa-comments me-2"></i> Create Assistant Chat</strong></h3>
       </div>
       <div class="card-body">
-
         <!-- Tip Section -->
         <div class="tips-section alert alert-secondary alert-dismissible d-flex col-lg-12 align-items-center" role="alert">
           <img src="{% static 'img/custom-illustrations-v2/i2-83.png' %}" width="25%" class="me-8 rounded" alt="Illustration for tip">
@@ -47,6 +46,10 @@
 
         <hr>
 
+        <img src="{% static 'img/common/elc-1.png' %}" class="rounded" style="width: 100%;" alt="Illustration for tips">
+
+        <hr>
+
         <!-- Create Chat Form -->
         <form method="post">
           {% csrf_token %}
@@ -60,7 +63,7 @@
             </select>
           </div>
 
-          <button type="submit" class="btn btn-primary mt-4 w-25">
+          <button type="submit" class="btn btn-success mt-4 w-25">
             <strong><i class="fa fa-plus me-2"></i> Create Chat</strong>
           </button>
         </form>
