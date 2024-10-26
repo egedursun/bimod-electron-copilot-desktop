@@ -53,10 +53,10 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Build the dashboard (chat) page for assistants.
-- [ ] Build the dashboard (chat) page for leanmods.
-- [ ] Build the dashboard (chat) page for orchestrations.
 - [ ] Polish the images in the UI/UX.
+- [ ] Implement the messaging service integration for assistants.
+- [ ] Implement the messaging service integration for leanmods.
+- [ ] Implement the messaging service integration for orchestrations.
 - [ ] Try to adjust the electron application logo.
 - [ ] Try to take the first build for MacOSX (For testing)
 - [ ] Create the deployment branch (along with the main).

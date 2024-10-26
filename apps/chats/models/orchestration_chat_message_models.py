@@ -33,8 +33,7 @@ class MultimodalOrchestrationChatMessage(models.Model):
     sent_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.chat.agent_name + " - " + self.chat.chat_name + " - " + self.sent_at.strftime(
-            "%Y-%m-%d %H:%M:%S")
+        return self.message_role + " - " + self.sent_at.strftime("%Y-%m-%d %H:%M:%S")
 
     class Meta:
         verbose_name = "Multimodal Orchestration Chat Message"

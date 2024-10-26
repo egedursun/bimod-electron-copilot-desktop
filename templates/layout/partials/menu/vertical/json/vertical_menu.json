@@ -35,7 +35,7 @@
           "url": "connections:assistant_create"
         },
         {
-          "name": "Disconnect Assistants",
+          "name": "Manage Assistants",
           "slug": "assistant-service-disconnect",
           "url": "connections:assistant_remove"
         }
@@ -52,7 +52,7 @@
           "url": "connections:leanmod_create"
         },
         {
-          "name": "Disconnect LeanMods",
+          "name": "Manage LeanMods",
           "slug": "leanmod-service-disconnect",
           "url": "connections:leanmod_remove"
         }
@@ -69,7 +69,7 @@
           "url": "connections:orchestration_create"
         },
         {
-          "name": "Disconnect Orchestrations",
+          "name": "Manage Orchestrations",
           "slug": "orchestration-service-disconnect",
           "url": "connections:orchestration_remove"
         }
@@ -89,7 +89,7 @@
           "url": "chats:assistant_create"
         },
         {
-          "name": "Delete Assistant Chats",
+          "name": "Manage Assistant Chats",
           "slug": "assistant-service-delete",
           "url": "chats:assistant_remove"
         }
@@ -106,7 +106,7 @@
           "url": "chats:leanmod_create"
         },
         {
-          "name": "Delete LeanMod Chats",
+          "name": "Manage LeanMod Chats",
           "slug": "leanmod-service-delete",
           "url": "chats:leanmod_remove"
         }
@@ -123,7 +123,7 @@
           "url": "chats:orchestration_create"
         },
         {
-          "name": "Delete Orchestration Chats",
+          "name": "Manage Orchestration Chats",
           "slug": "orchestration-service-delete",
           "url": "chats:orchestration_remove"
         }
