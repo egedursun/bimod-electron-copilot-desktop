@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     ########################################
+    "apps.dashboards",
+    "apps.connections",
+    "apps.chats",
     "apps.messaging",
     ########################################
 ]

@@ -1,16 +1,142 @@
 {
   "menu": [
     {
-      "url": "index",
-      "icon": "menu-icon tf-icons ti ti-smart-home",
-      "name": "Page 1",
-      "slug": "index"
+      "menu_header": "Chat Dashboards"
     },
     {
-      "url": "page-2",
-      "icon": "menu-icon tf-icons ti ti-app-window",
-      "name": "Page 2",
-      "slug": "page-2"
+      "name": "Assistant Chat Dashboard",
+      "icon": "menu-icon tf-icons ti ti-dashboard",
+      "slug": "assistant-chat-dashboard",
+      "url": "messaging:main_manager_panel"
+    },
+    {
+      "name": "LeanMod Chat Dashboard",
+      "icon": "menu-icon tf-icons ti ti-dashboard",
+      "slug": "leanmod-chat-dashboard",
+      "url": "messaging:main_manager_panel"
+    },
+    {
+      "name": "Orchestration Chat Dashboard",
+      "icon": "menu-icon tf-icons ti ti-dashboard",
+      "slug": "orchestration-chat-dashboard",
+      "url": "messaging:main_manager_panel"
+    },
+    {
+      "menu_header": "Services"
+    },
+    {
+      "name": "Assistant Services",
+      "icon": "menu-icon tf-icons ti ti-cloud",
+      "slug": "assistant-services",
+      "submenu": [
+        {
+          "name": "Connect Assistant",
+          "slug": "assistant-service-connect",
+          "url": "messaging:assistant_connection_create"
+        },
+        {
+          "name": "Disconnect Assistant",
+          "slug": "assistant-service-disconnect",
+          "url": "messaging:assistant_connection_remove"
+        }
+      ]
+    },
+    {
+      "name": "LeanMod Services",
+      "icon": "menu-icon tf-icons ti ti-cloud",
+      "slug": "services",
+      "submenu": [
+        {
+          "name": "Connect LeanMod",
+          "slug": "leanmod-service-connect",
+          "url": "messaging:leanmod_connection_create"
+        },
+        {
+          "name": "Disconnect LeanMod",
+          "slug": "leanmod-service-disconnect",
+          "url": "messaging:leanmod_connection_remove"
+        }
+      ]
+    },
+    {
+      "name": "Orchestration Services",
+      "icon": "menu-icon tf-icons ti ti-cloud",
+      "slug": "services",
+      "submenu": [
+        {
+          "name": "Connect Orchestration",
+          "slug": "orchestration-service-connect",
+          "url": "messaging:orchestration_connection_create"
+        },
+        {
+          "name": "Disconnect Orchestration",
+          "slug": "orchestration-service-disconnect",
+          "url": "messaging:orchestration_connection_remove"
+        }
+      ]
+    },
+    {
+      "menu_header": "Chats"
+    },
+    {
+      "name": "Assistant Chats",
+      "icon": "menu-icon tf-icons ti ti-chat",
+      "slug": "assistant-services",
+      "submenu": [
+        {
+          "name": "Create Assistant Chat",
+          "slug": "assistant-service-create",
+          "url": "messaging:orchestration_connection_create"
+        },
+        {
+          "name": "Delete Assistant Chats",
+          "slug": "assistant-service-delete",
+          "url": "messaging:orchestration_connection_remove"
+        }
+      ]
+    },
+    {
+      "name": "LeanMod Chats",
+      "icon": "menu-icon tf-icons ti ti-chat",
+      "slug": "leanmod-services",
+      "submenu": [
+        {
+          "name": "Create LeanMod Chat",
+          "slug": "leanmod-service-create",
+          "url": "messaging:orchestration_connection_create"
+        },
+        {
+          "name": "Delete LeanMod Chats",
+          "slug": "leanmod-service-delete",
+          "url": "messaging:orchestration_connection_remove"
+        }
+      ]
+    },
+    {
+      "name": "Orchestration Chats",
+      "icon": "menu-icon tf-icons ti ti-cloud",
+      "slug": "orchestration-services",
+      "submenu": [
+        {
+          "name": "Create Orchestration Chat",
+          "slug": "orchestration-service-create",
+          "url": "messaging:orchestration_connection_create"
+        },
+        {
+          "name": "Delete Orchestration Chats",
+          "slug": "orchestration-service-delete",
+          "url": "messaging:orchestration_connection_remove"
+        }
+      ]
+    },
+    {
+      "menu_header": "Copilot"
+    },
+    {
+      "name": "Copilot Settings",
+      "icon": "menu-icon tf-icons ti ti-settings",
+      "slug": "copilot-settings",
+      "url": "messaging:main_manager_panel"
     }
   ]
 }

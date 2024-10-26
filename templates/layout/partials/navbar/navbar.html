@@ -14,9 +14,9 @@
       <!--  Brand demo (display only for navbar-full and hide on below xl) -->
       {% if navbar_full %}
       <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
-        <a href="{% url 'index' %}" class="app-brand-link">
+        <a href="{% url 'messaging:main_manager_panel' %}" class="app-brand-link">
           <span class="app-brand-logo demo">
-            {% include 'partials/logo.html' %}
+            {% static 'img/common/logo.png' %}
           </span>
           <span class="app-brand-text demo menu-text fw-bold">{% get_theme_variables 'template_name' %}</span>
         </a>
@@ -67,8 +67,8 @@
         </div>
         <!-- / Style Switcher-->
 
+        <!-- User
         <ul class="navbar-nav flex-row align-items-center ms-auto">
-          <!-- User -->
          <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
               <div class="avatar avatar-online">
@@ -126,8 +126,8 @@
               </li>
             </ul>
           </li>
-          <!--/ User -->
         </ul>
+        -->
 
       </div>
       {% if not navbar_detached %}

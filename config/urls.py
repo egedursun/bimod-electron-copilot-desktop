@@ -1,27 +1,28 @@
-"""
-URL configuration for web_project project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+#  Copyright (c) 2024 BMD™ Autonomous Holdings. All rights reserved.
+#
+#  Project: Bimod.io™
+#  File: urls.py
+#  Last Modified: 2024-10-25 16:23:14
+#  Author: Ege Dogan Dursun (Co-Founder & Chief Executive Officer / CEO @ BMD™ Autonomous Holdings)
+#  Created: 2024-10-25 18:54:50
+#
+#  This software is proprietary and confidential. Unauthorized copying,
+#  distribution, modification, or use of this software, whether for
+#  commercial, academic, or any other purpose, is strictly prohibited
+#  without the prior express written permission of BMD™ Autonomous
+#  Holdings.
+#
+#   For permission inquiries, please contact: admin@Bimod.io.
 
 from django.contrib import admin
 from django.urls import include, path
-from web_project.views import SystemView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     ########################################
-    path("", include("apps.messaging.urls")),
+    path("dashboards/", include("apps.dashboards.urls")),
+    path("connections/", include("apps.connections.urls")),
+    path("chats/", include("apps.chats.urls")),
+    path("messaging/", include("apps.messaging.urls")),
     ########################################
 ]

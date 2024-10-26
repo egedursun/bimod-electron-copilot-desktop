@@ -37,13 +37,13 @@ TEMPLATE_CONFIG = {
 # Theme Variables
 # ? Personalize template by changing theme variables (For ex: Name, URL Version etc...)
 THEME_VARIABLES = {
-    "creator_name": "PixInvent",
-    "creator_url": "https://pixinvent.com/",
-    "template_name": "Vuexy",
-    "template_suffix": "Django Admin Template",
+    "creator_name": "BimodLab Desktop Copilot Client",
+    "creator_url": "https://www.bimod.io/",
+    "template_name": "Bimod.io",
+    "template_suffix": "Bimod.io - Intelligent Assistant as a Service (AIaaS)",
     "template_version": "2.0.0",
     "template_free": False,
-    "template_description": "Vuexy is a modern, clean and fully responsive admin template built with Bootstrap 5, Django, HTML, CSS, jQuery, and JavaScript. It has a huge collection of reusable UI components and integrated with the latest jQuery plugins. It can be used for all types of web applications like custom admin panel, project management system, admin dashboard, Backend application or CRM.",
+    "template_description": "Bimod.io is an AI-powered AIaaS provider that helps you to build, train, and deploy your own AI assistant in minutes and automate your business processes.",
     "template_keyword": "django, django admin, dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5",
     "facebook_url": "https://www.facebook.com/pixinvents/",
     "twitter_url": "https://twitter.com/pixinvents",
