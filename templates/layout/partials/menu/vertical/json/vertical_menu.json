@@ -7,19 +7,19 @@
       "name": "Assistant Chat Dashboard",
       "icon": "menu-icon tf-icons ti ti-dashboard",
       "slug": "assistant-chat-dashboard",
-      "url": "messaging:main_manager_panel"
+      "url": "dashboards:assistant_dashboard"
     },
     {
       "name": "LeanMod Chat Dashboard",
       "icon": "menu-icon tf-icons ti ti-dashboard",
       "slug": "leanmod-chat-dashboard",
-      "url": "messaging:main_manager_panel"
+      "url": "dashboards:leanmod_dashboard"
     },
     {
       "name": "Orchestration Chat Dashboard",
       "icon": "menu-icon tf-icons ti ti-dashboard",
       "slug": "orchestration-chat-dashboard",
-      "url": "messaging:main_manager_panel"
+      "url": "dashboards:orchestration_dashboard"
     },
     {
       "menu_header": "Services"
@@ -32,12 +32,12 @@
         {
           "name": "Connect Assistant",
           "slug": "assistant-service-connect",
-          "url": "messaging:assistant_connection_create"
+          "url": "connections:assistant_create"
         },
         {
           "name": "Disconnect Assistant",
           "slug": "assistant-service-disconnect",
-          "url": "messaging:assistant_connection_remove"
+          "url": "connections:assistant_remove"
         }
       ]
     },
@@ -49,12 +49,12 @@
         {
           "name": "Connect LeanMod",
           "slug": "leanmod-service-connect",
-          "url": "messaging:leanmod_connection_create"
+          "url": "connections:leanmod_create"
         },
         {
           "name": "Disconnect LeanMod",
           "slug": "leanmod-service-disconnect",
-          "url": "messaging:leanmod_connection_remove"
+          "url": "connections:leanmod_remove"
         }
       ]
     },
@@ -66,12 +66,12 @@
         {
           "name": "Connect Orchestration",
           "slug": "orchestration-service-connect",
-          "url": "messaging:orchestration_connection_create"
+          "url": "connections:orchestration_create"
         },
         {
           "name": "Disconnect Orchestration",
           "slug": "orchestration-service-disconnect",
-          "url": "messaging:orchestration_connection_remove"
+          "url": "connections:orchestration_remove"
         }
       ]
     },
@@ -86,12 +86,12 @@
         {
           "name": "Create Assistant Chat",
           "slug": "assistant-service-create",
-          "url": "messaging:orchestration_connection_create"
+          "url": "chats:assistant_create"
         },
         {
           "name": "Delete Assistant Chats",
           "slug": "assistant-service-delete",
-          "url": "messaging:orchestration_connection_remove"
+          "url": "chats:assistant_remove"
         }
       ]
     },
@@ -103,12 +103,12 @@
         {
           "name": "Create LeanMod Chat",
           "slug": "leanmod-service-create",
-          "url": "messaging:orchestration_connection_create"
+          "url": "chats:leanmod_create"
         },
         {
           "name": "Delete LeanMod Chats",
           "slug": "leanmod-service-delete",
-          "url": "messaging:orchestration_connection_remove"
+          "url": "chats:leanmod_remove"
         }
       ]
     },
@@ -120,12 +120,12 @@
         {
           "name": "Create Orchestration Chat",
           "slug": "orchestration-service-create",
-          "url": "messaging:orchestration_connection_create"
+          "url": "chats:orchestration_create"
         },
         {
           "name": "Delete Orchestration Chats",
           "slug": "orchestration-service-delete",
-          "url": "messaging:orchestration_connection_remove"
+          "url": "chats:orchestration_remove"
         }
       ]
     },
