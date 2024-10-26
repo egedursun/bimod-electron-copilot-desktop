@@ -3,7 +3,7 @@ const { exec } = require('child_process');
 const axios = require('axios');
 
 function checkServer() {
-    return axios.get('http://127.0.0.1:8000')
+    return axios.get('http://127.0.0.1:8080')
         .then(() => true)
         .catch(() => false);
 }
@@ -25,11 +25,11 @@ async function createWindow() {
         },
     });
     await waitForServer();
-    win.loadURL('http://127.0.0.1:8000');
+    win.loadURL('http://127.0.0.1:8080');
 }
 
 app.whenReady().then(() => {
-    exec("python3 manage.py runserver", (err, stdout, stderr) => {
+    exec("python3 manage.py runserver 8080", (err, stdout, stderr) => {
         if (err) {
             console.error(`Error starting Django server: ${err}`);
             return;

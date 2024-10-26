@@ -21,8 +21,7 @@
     <div class="card-header bg-primary text-white">
       <h6><strong class="text-white"><i class="fa fa-comments me-2 text-white"></i> Orchestration Chat Dashboard</strong></h6>
     </div>
-    <div class="card-body">
-
+    <div class="card-body mt-4">
       {% if messages %}
         {% for message in messages %}
           <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
@@ -50,14 +49,14 @@
           {% for message in chat_messages %}
             {% if message.message_role != "system" %}
               <div class="d-flex mb-2 {% if message.message_role == 'user' %}justify-content-end{% else %}justify-content-start{% endif %}">
-                <div class="p-2 {% if message.message_role == 'user' %}btn-dark{% else %}btn-primary{% endif %} rounded" style="max-width: 80%;">
+                <div class="p-2 {% if message.message_role == 'user' %}bg-label-dark{% else %}btn-primary{% endif %} rounded" style="max-width: 80%;">
                   <strong>
                     <i class="fa {% if message.message_role == 'user' %}fa-user{% else %}fa-robot{% endif %} me-2"></i>
                     {% if message.message_role == 'user' %}You{% else %}Assistant{% endif %}<br><br>
                   </strong>
-                  <p class="btn-secondary p-1 py-2 rounded w-100" style="font-size: 10px;">
-                    <i class="fa fa-clock me-1"></i>
-                    <strong>{{ message.sent_at }}</strong>
+                  <p class="btn-white p-1 py-2 rounded w-100" style="font-size: 10px;">
+                    <i class="fa fa-clock ms-1 me-1"></i>
+                    <strong class="text-black">{{ message.sent_at }}</strong>
                   </p>
                   <hr>
                   <p class="mb-4">{{ message.message_text|linebreaksbr }}</p>
@@ -68,7 +67,7 @@
         </div>
 
         <!-- Message Form -->
-        <form method="post" enctype="multipart/form-data" action="{% url 'messaging:orchestration_send_message' selected_chat.id %}">
+        <form method="post" enctype="multipart/form-data" action=".">
           {% csrf_token %}
           <input type="hidden" name="chat_id" value="{{ selected_chat.id }}">
           <div class="input-group mb-2">
@@ -76,19 +75,29 @@
           </div>
           <div class="d-flex align-items-center mb-3">
             <label class="btn btn-success btn-sm me-2">
-              <i class="fa fa-paperclip"></i> <input type="file" name="attached_file" hidden>
+              <i class="fa fa-paperclip"></i> <input type="file" name="attached_file" multiple hidden onchange="showSelectedFiles(this, '#file-badges')">
             </label>
             <label class="btn btn-sm btn-success me-2">
-              <i class="fa fa-image"></i> <input type="file" name="attached_image" hidden>
+              <i class="fa fa-image"></i> <input type="file" name="attached_image" multiple hidden onchange="showSelectedFiles(this, '#image-badges')">
             </label>
+            <button class="btn btn-sm btn-danger me-2" onclick="document.location.reload()">
+              <i class="fa fa-trash-can"></i>
+            </button>
             <button type="submit" class="btn btn-primary btn-sm ms-auto">
-              <i class="fa fa-paper-plane me-1"></i> Send
+              <i class="fa fa-paper-plane me-1"></i><strong>Send Message</strong>
             </button>
           </div>
+          <hr>
+          <small class="text-muted"><i class="fa fa-paperclip me-1"></i><strong>File and Image Staging</strong></small>
+          <!-- Display selected files -->
+          <div id="file-badges" class="mb-2"></div>
+          <div id="image-badges" class="mb-2"></div>
         </form>
       {% else %}
         <p class="text-muted">Please select a chat to view messages.</p>
       {% endif %}
+
+      <hr>
 
     </div>
   </div>
@@ -100,6 +109,20 @@
   <script>
     $(document).ready(function() {
       $('#chat-picker').select2({ width: '100%' });
+      var chatHistory = document.querySelector('.chat-history');
+      if (chatHistory) {
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      }
     });
+
+    function showSelectedFiles(input, badgeContainerId) {
+      const badgeContainer = $(badgeContainerId);
+      badgeContainer.empty();
+      for (let i = 0; i < input.files.length; i++) {
+        const file = input.files[i];
+        const badge = `<span class="badge bg-primary me-1 my-1"><strong>${file.name}</strong></span>`;
+        badgeContainer.append(badge);
+      }
+    }
   </script>
 {% endblock %}

@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     "apps.dashboards",
     "apps.connections",
     "apps.chats",
-    "apps.messaging",
     "apps.copilot",
     ########################################
 ]
@@ -66,6 +65,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "config.middleware.LoadingBarMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"

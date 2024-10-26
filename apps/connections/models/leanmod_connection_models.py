@@ -31,7 +31,7 @@ from django.db import models
 
 
 class LeanmodConnection(models.Model):
-    connection_endpoint = models.CharField(max_length=10000, null=True, blank=True)
+    connection_endpoint = models.CharField(max_length=10000, null=True, blank=True, unique=True)
     connection_is_public = models.BooleanField(default=False)
     connection_api_key = models.CharField(max_length=10000, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

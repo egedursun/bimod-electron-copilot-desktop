@@ -45,4 +45,4 @@ class ConnectionView_OrchestrationRemove(TemplateView):
         else:
             messages.error(request, "No Orchestration connection ID provided.")
 
-        return redirect('connections:leanmod_remove')
+        return redirect('connections:orchestration_remove')

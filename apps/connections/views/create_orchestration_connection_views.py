@@ -16,6 +16,7 @@
 
 import logging
 
+import requests
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
@@ -38,18 +39,47 @@ class ConnectionView_OrchestrationCreate(TemplateView):
         connection_is_public = request.POST.get('connection_is_public', 'off') == 'on'
         connection_api_key = request.POST.get('connection_api_key') if not connection_is_public else None
 
+        if "export_orchestrations" not in connection_endpoint:
+            messages.error(request, "Orchestration connection endpoint must contain 'export_orchestrations'.")
+            return redirect('connections:orchestration_create')
+
         if not connection_endpoint:
             messages.error(request, "Orchestration connection endpoint is required.")
             return redirect('connections:orchestration_create')
-
         if not connection_is_public and not connection_api_key:
             messages.error(request, "API key is required when Orchestration connection is not public.")
             return redirect('connections:orchestration_create')
 
-        new_connection = OrchestrationConnection(
-            connection_endpoint=connection_endpoint, connection_is_public=connection_is_public,
-            connection_api_key=connection_api_key)
-        new_connection.save()
+        health_check_url = connection_endpoint.replace("app", "health")
+        if health_check_url.endswith("/"):
+            health_check_url = health_check_url[:-1]
+        if connection_api_key and "Bearer" not in connection_api_key:
+            connection_api_key = f"Bearer {connection_api_key}"
+        headers = {"Authorization": f"{connection_api_key}"} if connection_api_key else {}
+        try:
+            response = requests.post(health_check_url, headers=headers)
+            if response.status_code != 200:
+                try:
+                    error_message = response.json().get('message', 'The endpoint did not pass the health check.')
+                except ValueError:
+                    error_message = "Received a non-JSON response from the health check endpoint."
+                messages.error(request, f"Health check failed: {error_message}")
+                return redirect('connections:orchestration_create')
+        except requests.RequestException as e:
+            messages.error(request, f"Could not connect to the endpoint. Please check the URL and network: {e}")
+            return redirect('connections:orchestration_create')
+
+        try:
+            new_connection = OrchestrationConnection(
+                connection_endpoint=connection_endpoint,
+                connection_is_public=connection_is_public,
+                connection_api_key=connection_api_key
+            )
+            new_connection.save()
+        except Exception as e:
+            logger.error(f"Error creating Orchestration connection: {e}")
+            messages.error(request, f"Error creating Orchestration connection: {e}")
+            return redirect('connections:orchestration_create')
 
         messages.success(request, "Orchestration connection created successfully.")
         return redirect('connections:orchestration_create')

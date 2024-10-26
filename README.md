@@ -53,10 +53,9 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Polish the images in the UI/UX.
-- [ ] Implement the messaging service integration for assistants.
-- [ ] Implement the messaging service integration for leanmods.
-- [ ] Implement the messaging service integration for orchestrations.
+- [ ] Fix image and file sending for assistant chats.
+- [ ] Fix image and file sending for leanmod chats.
+- [ ] Fix image and file sending for orchestration chats.
 - [ ] Try to adjust the electron application logo.
 - [ ] Try to take the first build for MacOSX (For testing)
 - [ ] Create the deployment branch (along with the main).

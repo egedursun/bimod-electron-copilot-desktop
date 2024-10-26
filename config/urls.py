@@ -25,7 +25,6 @@ urlpatterns = [
     path("dashboards/", include("apps.dashboards.urls")),
     path("connections/", include("apps.connections.urls")),
     path("chats/", include("apps.chats.urls")),
-    path("messaging/", include("apps.messaging.urls")),
     path("copilot/", include("apps.copilot.urls")),
     ########################################
 ]

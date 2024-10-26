@@ -14,7 +14,11 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 
+import json
 
+import requests
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView
 
@@ -29,7 +33,6 @@ class DashboardView_Orchestration(TemplateView):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
         context['available_chats'] = MultimodalOrchestrationChat.objects.all()
         chat_id = self.request.GET.get('chat_id')
-
         if chat_id:
             selected_chat = get_object_or_404(MultimodalOrchestrationChat, id=chat_id)
             context['selected_chat'] = selected_chat
@@ -44,21 +47,55 @@ class DashboardView_Orchestration(TemplateView):
     def post(self, request, *args, **kwargs):
         chat_id = request.POST.get('chat_id')
         message_text = request.POST.get('message_content')
-        attached_file = request.FILES.get('attached_file')
-        attached_image = request.FILES.get('attached_image')
-
+        attached_files = request.FILES.getlist('attached_file')
+        attached_images = request.FILES.getlist('attached_image')
         if not chat_id or not message_text:
             messages.error(request, "Please select a chat and enter a message.")
-            return redirect('orchestration_chat')
+            return redirect('dashboards:orchestration_dashboard')
 
         chat = get_object_or_404(MultimodalOrchestrationChat, id=chat_id)
+        file_uris = []
+        for attached_file in attached_files:
+            file_name = default_storage.save(f'chat_files/{attached_file.name}', ContentFile(attached_file.read()))
+            file_uris.append(default_storage.url(file_name))
+
+        image_uris = []
+        for attached_image in attached_images:
+            image_name = default_storage.save(f'chat_images/{attached_image.name}', ContentFile(attached_image.read()))
+            image_uris.append(default_storage.url(image_name))
+
         MultimodalOrchestrationChatMessage.objects.create(
-            chat=chat,
-            message_role='user',
-            message_text=message_text,
-            message_file_uris=[attached_file.url] if attached_file else [],
-            message_image_uris=[attached_image.url] if attached_image else []
+            chat=chat, message_role='user', message_text=message_text, message_file_uris=file_uris,
+            message_image_uris=image_uris
         )
 
+        chat_messages = MultimodalOrchestrationChatMessage.objects.filter(chat=chat).order_by('sent_at')
+        chat_history = [
+            {"role": msg.message_role, "content": msg.message_text} for msg in chat_messages
+        ]
+
+        endpoint = chat.connection.connection_endpoint
+        api_key = chat.connection.connection_api_key
+        if "Bearer" not in api_key:
+            api_key = f"Bearer {api_key}"
+        headers = {"Authorization": f"{api_key}", "Content-Type": "application/json"}
+        payload = json.dumps({"chat_history": chat_history})
+
+        try:
+            response = requests.post(endpoint, headers=headers, data=payload)
+            response_data = response.json()
+            response_data = response_data.get("data", {})
+            if response.status_code == 200:
+                assistant_message = response_data.get("message", {}).get("content")
+                if assistant_message:
+                    MultimodalOrchestrationChatMessage.objects.create(
+                        chat=chat, message_role='assistant', message_text=assistant_message
+                    )
+            else:
+                messages.error(request, "There has been an error while sending the message: "
+                                        f"{response_data.get('message', '')}")
+        except requests.RequestException as e:
+            messages.error(request, f"Error while sending the message: {e}")
+
         messages.success(request, "Message sent successfully.")
-        return redirect('orchestration_chat', chat_id=chat.id)
+        return redirect(f"{request.build_absolute_uri('/dashboards/orchestration/')}?chat_id={chat_id}")
