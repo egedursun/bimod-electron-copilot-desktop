@@ -67,19 +67,28 @@
         </div>
 
         <!-- Message Form -->
-        <form method="post" enctype="multipart/form-data" action=".">
+        <form method="post" action=".">
           {% csrf_token %}
           <input type="hidden" name="chat_id" value="{{ selected_chat.id }}">
           <div class="input-group mb-2">
             <textarea class="form-control" name="message_content" placeholder="Type your message here..." rows="1" required></textarea>
           </div>
+
+          <div class="row">
+            <!-- File URL Input -->
+            <div class="col-6 mb-3">
+              <label for="file-urls" class="form-label"><strong>File URLs</strong></label>
+              <textarea id="file-urls" name="file_uris" class="form-control" placeholder="Enter file URLs separated by commas" rows="1"></textarea>
+            </div>
+
+            <!-- Image URL Input -->
+            <div class="col-6 mb-3">
+              <label for="image-urls" class="form-label"><strong>Image URLs</strong></label>
+              <textarea id="image-urls" name="image_uris" class="form-control" placeholder="Enter image URLs separated by commas" rows="1"></textarea>
+            </div>
+          </div>
+
           <div class="d-flex align-items-center mb-3">
-            <label class="btn btn-success btn-sm me-2">
-              <i class="fa fa-paperclip"></i> <input type="file" name="attached_file" multiple hidden onchange="showSelectedFiles(this, '#file-badges')">
-            </label>
-            <label class="btn btn-sm btn-success me-2">
-              <i class="fa fa-image"></i> <input type="file" name="attached_image" multiple hidden onchange="showSelectedFiles(this, '#image-badges')">
-            </label>
             <button class="btn btn-sm btn-danger me-2" onclick="document.location.reload()">
               <i class="fa fa-trash-can"></i>
             </button>
@@ -87,11 +96,6 @@
               <i class="fa fa-paper-plane me-1"></i><strong>Send Message</strong>
             </button>
           </div>
-          <hr>
-          <small class="text-muted"><i class="fa fa-paperclip me-1"></i><strong>File and Image Staging</strong></small>
-          <!-- Display selected files -->
-          <div id="file-badges" class="mb-2"></div>
-          <div id="image-badges" class="mb-2"></div>
         </form>
       {% else %}
         <p class="text-muted">Please select a chat to view messages.</p>
@@ -114,15 +118,5 @@
         chatHistory.scrollTop = chatHistory.scrollHeight;
       }
     });
-
-    function showSelectedFiles(input, badgeContainerId) {
-      const badgeContainer = $(badgeContainerId);
-      badgeContainer.empty();
-      for (let i = 0; i < input.files.length; i++) {
-        const file = input.files[i];
-        const badge = `<span class="badge bg-primary me-1 my-1"><strong>${file.name}</strong></span>`;
-        badgeContainer.append(badge);
-      }
-    }
   </script>
 {% endblock %}

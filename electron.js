@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const { exec } = require('child_process');
 const axios = require('axios');
+const path = require('path');
 
 function checkServer() {
     return axios.get('http://127.0.0.1:8080')
@@ -24,9 +25,9 @@ async function createWindow() {
         webPreferences: {
             nodeIntegration: true,
         },
+        icon: path.join(__dirname, 'assets/img/common/logo.png')
     });
 
-    // Set the aspect ratio (width / height)
     win.setAspectRatio(1280 / 800);
 
     await waitForServer();

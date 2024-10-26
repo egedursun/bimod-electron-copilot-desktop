@@ -19,6 +19,7 @@ node_modules/
 *.so
 
 # Distribution / packaging
+.idea/**
 .Python
 build/
 develop-eggs/

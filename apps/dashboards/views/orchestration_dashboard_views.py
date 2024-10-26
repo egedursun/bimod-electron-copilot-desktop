@@ -41,42 +41,41 @@ class DashboardView_Orchestration(TemplateView):
         else:
             context['selected_chat'] = None
             context['chat_messages'] = None
-
         return context
 
     def post(self, request, *args, **kwargs):
         chat_id = request.POST.get('chat_id')
         message_text = request.POST.get('message_content')
-        attached_files = request.FILES.getlist('attached_file')
-        attached_images = request.FILES.getlist('attached_image')
+        attached_files = request.POST.get('file_uris')
+        attached_images = request.POST.get('image_uris')
+
         if not chat_id or not message_text:
             messages.error(request, "Please select a chat and enter a message.")
             return redirect('dashboards:orchestration_dashboard')
 
         chat = get_object_or_404(MultimodalOrchestrationChat, id=chat_id)
-        file_uris = []
-        for attached_file in attached_files:
-            file_name = default_storage.save(f'chat_files/{attached_file.name}', ContentFile(attached_file.read()))
-            file_uris.append(default_storage.url(file_name))
-
-        image_uris = []
-        for attached_image in attached_images:
-            image_name = default_storage.save(f'chat_images/{attached_image.name}', ContentFile(attached_image.read()))
-            image_uris.append(default_storage.url(image_name))
-
         MultimodalOrchestrationChatMessage.objects.create(
-            chat=chat, message_role='user', message_text=message_text, message_file_uris=file_uris,
-            message_image_uris=image_uris
+            chat=chat,
+            message_role='user',
+            message_text=message_text,
+            message_file_uris=attached_files,
+            message_image_uris=attached_images
         )
 
         chat_messages = MultimodalOrchestrationChatMessage.objects.filter(chat=chat).order_by('sent_at')
         chat_history = [
-            {"role": msg.message_role, "content": msg.message_text} for msg in chat_messages
+            {
+                "role": msg.message_role,
+                "content": msg.message_text,
+                "file_uris": msg.message_file_uris,
+                "image_uris": msg.message_image_uris
+            }
+            for msg in chat_messages
         ]
 
         endpoint = chat.connection.connection_endpoint
         api_key = chat.connection.connection_api_key
-        if "Bearer" not in api_key:
+        if api_key and "Bearer" not in api_key:
             api_key = f"Bearer {api_key}"
         headers = {"Authorization": f"{api_key}", "Content-Type": "application/json"}
         payload = json.dumps({"chat_history": chat_history})

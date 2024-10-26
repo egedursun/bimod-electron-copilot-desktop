@@ -41,6 +41,7 @@ ENVIRONMENT = os.environ.get("DJANGO_ENVIRONMENT", default="local")
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -179,3 +180,15 @@ THEME_VARIABLES = THEME_VARIABLES
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Electron Admin",
+    "site_header": "Electron Admin",
+    "site_brand": "Electron Admin",
+    "welcome_sign": "Electron Staff Control Panel",
+    "copyright": "BMD Autonomous Holdings. All rights reserved.",
+    "show_sidebar": True,
+}
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

@@ -1,9 +1,22 @@
 {
   "name": "bimod-electron-copilot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "electron.js",
+  "build": {
+    "appId": "com.bimod.copilot",
+    "productName": "Bimod Electron Copilot",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*"
+    ],
+    "icon": "assets/img/common/logo"
+  },
   "scripts": {
     "start": "electron electron.js",
+    "build": "electron-builder",
+    "dist": "electron-builder --mac --win --linux",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,7 +24,8 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "electron": "^33.0.2"
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8"
   },
   "dependencies": {
     "axios": "^1.7.7"

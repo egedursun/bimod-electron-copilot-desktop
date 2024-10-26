@@ -53,12 +53,6 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Fix image and file sending for assistant chats.
-- [ ] Fix image and file sending for leanmod chats.
-- [ ] Fix image and file sending for orchestration chats.
-
-- [ ] Try to adjust the electron application logo.
-- [ ] Try to take the first build for MacOSX (For testing)
 - [ ] Create the deployment branch (along with the main).
 - [ ] Build the GitHub workflow files.
 - [ ] Try to deployment actions for the app on GitHub.

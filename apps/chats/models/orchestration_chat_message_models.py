@@ -27,8 +27,8 @@ class MultimodalOrchestrationChatMessage(models.Model):
     message_role = models.CharField(max_length=200, choices=CHAT_ROLES, default=ChatRolesNames.SYSTEM)
 
     message_text = models.TextField(blank=True, null=True)
-    message_file_uris = models.JSONField(blank=True, null=True)
-    message_image_uris = models.JSONField(blank=True, null=True)
+    message_file_uris = models.TextField(blank=True, null=True)
+    message_image_uris = models.TextField(blank=True, null=True)
 
     sent_at = models.DateTimeField(auto_now_add=True)
 
