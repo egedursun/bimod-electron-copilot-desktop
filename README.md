@@ -1,7 +1,18 @@
-
 ## BIMOD.IO - ELECTRON COPILOT - DESKTOP CLIENT
+
 ### INSTRUCTIONS AND DOCUMENTATION
+
 #### **Author**: [Bimod.io AI as a Service](https://www.bimod.io)
+
+---
+
+**DEPENDENCIES:**
+
+- These will be needed to installed by an Bash script for the functions to work properly.
+
+```bash
+brew install sox
+```
 
 ---
 
@@ -53,17 +64,6 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Package the application for the platforms.
-
-- [ ] Start working on features for background data retrieval.
-- [ ] Start working on features for background SSH server creation.
-- [ ] Try to connect to own computer with assistant connection.
-- [ ] Take the third build of the application.
-- [ ] Put the updated version on the website.
-
-**RELEASE 3**
-
-- [ ] Try listening to audio recordings and speeches (for meeting integration)
 - [ ] If it is working, start working on the MEETING project (KANBAN) on mainframe (bimod.io)
 - [ ] Test the functionality (dashboard kanban topic creation, description creation, task assignment)
 - [ ] Take the fourth build of the application.
@@ -75,7 +75,7 @@ sudo npx electron electron.js
 - [ ] Create the services and protocols to communicate the tempo.
 - [ ] If working, start working on the TEMPO project, on mainframe (bimod.io).
 - [ ] Test the functionality (tempo inspection, people task summarization, meta-reporting, performance analysis,
-kanban comparison analysis, etc.)
+  kanban comparison analysis, etc.)
 - [ ] Take the fifth build of the application.
 - [ ] Put the updated version on the website.
 

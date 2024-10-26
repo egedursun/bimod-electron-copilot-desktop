@@ -20,9 +20,11 @@ const { app, BrowserWindow, screen } = require('electron');
 const { exec } = require('child_process');
 const axios = require('axios');
 const path = require('path');
+const server = require('./electron_server/server');
 
 let mainWindow;
 let floatingButton;
+let isRecording = false;
 
 function checkServer() {
     return axios.get('http://127.0.0.1:8080')
@@ -39,58 +41,31 @@ async function waitForServer() {
 }
 
 async function createWindow() {
-    mainWindow = new BrowserWindow({
-        width: 1280,
-        height: 800,
-        resizable: true,
-        webPreferences: {
-            nodeIntegration: true,
-        },
-        icon: path.join(__dirname, 'assets/img/common/logo.png')
-    });
-    mainWindow.setAspectRatio(1280 / 800);
-    await waitForServer();
-    mainWindow.loadURL('http://127.0.0.1:8080');
-}
-
-async function createFloatingButton() {
-  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-  floatingButton = new BrowserWindow({
-    width: 80,
-    height: 80,
-    x: width - 150,
-    y: height - 100,
-    frame: false,
-    transparent: true,
-    alwaysOnTop: true,
-    skipTaskbar: true,
-    resizable: false,
-    hasShadow: true,
+  mainWindow = new BrowserWindow({
+    width: 1280,
+    height: 800,
+    resizable: true,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
-    }
+    },
+    icon: path.join(__dirname, 'assets/img/common/logo.png')
   });
-
+  mainWindow.setAspectRatio(1280 / 800);
   await waitForServer();
-  floatingButton.loadURL('http://127.0.0.1:8080/copilot/modal/');
-  floatingButton.setIgnoreMouseEvents(false);
-  if (process.platform === 'darwin') {
-    floatingButton.setAlwaysOnTop(true, 'floating');
-  }
+  mainWindow.loadURL('http://127.0.0.1:8080');
 }
 
-app.whenReady().then(() => {
-    exec("python3 manage.py runserver 8080", (err, stdout, stderr) => {
+app.whenReady().then(async () => {
+    exec('python3 manage.py runserver 8080', (err, stdout, stderr) => {
         if (err) {
             console.error(`Error starting Django server: ${err}`);
             return;
         }
-        console.log("Django server started:", stdout);
+        console.log('Django server started:', stdout);
     });
 
     createWindow();
-    // createFloatingButton();
+    server.start();
 });
 
 app.on('window-all-closed', () => {
@@ -100,6 +75,5 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
-        // createFloatingButton();
     }
 });

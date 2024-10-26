@@ -35,21 +35,21 @@
       {% endif %}
 
       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-      
+
         <!-- Copilot -->
-        <a class="btn btn-text-secondary btn-icon rounded-pill me-2" onclick="openPopupWindow()" title="Refresh page">
+        <a class="btn btn-text-secondary btn-icon rounded-pill me-2" onclick="openPopupWindow()" title="Copilot">
            <i class="ti ti-robot ti-md p-1 btn-primary rounded-circle"></i>
         </a>
         <!-- / Copilot -->
-        
+
         <!-- Page Refresher -->
           <button class="btn btn-text-secondary btn-icon rounded-pill me-2" onclick="window.location.reload();" title="Refresh page">
             <i class="ti ti-reload ti-md p-1 btn-success rounded-circle"></i>
           </button>
         <!-- / Page Refresher -->
-      
+
         <!-- Admin Panel -->
-          <a class="btn btn-text-secondary btn-icon rounded-pill me-2" href="/admin" target="_blank" title="Refresh page">
+          <a class="btn btn-text-secondary btn-icon rounded-pill me-2" href="/admin" target="_blank" title="Admin Panel">
             <i class="ti ti-id-badge-2 ti-md p-1 btn-danger rounded-circle"></i>
           </a>
         <!-- / Admin Panel -->
@@ -80,6 +80,13 @@
           </div>
         </div>
         <!-- / Style Switcher-->
+      
+        <!-- Record Meeting -->
+          <a class="btn btn-primary py-1 ps-2 pe-4 btn-sm ms-12 me-4 my-1" href="javascript:void(0);" id="record-button" title="Start Meeting Record">
+            <i id="record-icon" class="ti ti-player-record-filled ti-md p-1 text-success rounded-circle"></i><strong><small id="record-text">Start Meeting Record</small></strong>
+          </a>
+        <!-- / Record Meeting -->
+      
       </div>
       {% if not navbar_detached %}
     </div>
@@ -98,5 +105,38 @@
             'width=75,height=100,resizable=no,scrollbars=no'
         );
     }
+</script>
+<script>
+    let isRecording = false;
+
+    document.getElementById('record-button').addEventListener('click', () => {
+        isRecording = !isRecording;
+
+        fetch('http://localhost:9090/toggle-recording', {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.status);
+
+            // Update icon appearance and button text
+            const recordButton = document.getElementById('record-button');
+            const recordIcon = document.getElementById('record-icon');
+            const recordText = document.getElementById('record-text');
+
+            if (isRecording) {
+                recordIcon.classList.replace('text-success', 'text-danger');
+                recordIcon.classList.replace('ti-player-record-filled', 'ti-player-stop-filled');
+                recordText.textContent = "Stop Meeting Record";
+                recordButton.title = "Stop Meeting Record";
+            } else {
+                recordIcon.classList.replace('text-danger', 'text-success');
+                recordIcon.classList.replace('ti-player-stop-filled', 'ti-player-record-filled');
+                recordText.textContent = "Start Meeting Record";
+                recordButton.title = "Start Meeting Recording";
+            }
+        })
+        .catch(error => console.error('Error toggling recording:', error));
+    });
 </script>
 {% endblock %}
