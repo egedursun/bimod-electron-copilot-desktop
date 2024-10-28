@@ -21,13 +21,14 @@ const { exec } = require('child_process');
 const axios = require('axios');
 const path = require('path');
 const server = require('./electron_server/server');
+require('dotenv').config();
 
 let mainWindow;
 let floatingButton;
 let isRecording = false;
 
 function checkServer() {
-    return axios.get('http://127.0.0.1:8080')
+    return axios.get(process.env.BASE_URL)
         .then(() => true)
         .catch(() => false);
 }
@@ -42,21 +43,21 @@ async function waitForServer() {
 
 async function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 800,
+    width: parseInt(process.env.DEFAULT_SCREEN_WIDTH),
+    height: parseInt(process.env.DEFAULT_SCREEN_HEIGHT),
     resizable: true,
     webPreferences: {
       nodeIntegration: true,
     },
     icon: path.join(__dirname, 'assets/img/common/logo.png')
   });
-  mainWindow.setAspectRatio(1280 / 800);
+  mainWindow.setAspectRatio(parseInt(process.env.DEFAULT_SCREEN_WIDTH) / parseInt(process.env.DEFAULT_SCREEN_HEIGHT));
   await waitForServer();
-  mainWindow.loadURL('http://127.0.0.1:8080');
+  mainWindow.loadURL(process.env.BASE_URL);
 }
 
 app.whenReady().then(async () => {
-    exec('python3 manage.py runserver 8080', (err, stdout, stderr) => {
+    exec(`python3 manage.py runserver ${process.env.BASE_PORT}`, (err, stdout, stderr) => {
         if (err) {
             console.error(`Error starting Django server: ${err}`);
             return;

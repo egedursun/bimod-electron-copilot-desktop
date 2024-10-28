@@ -18,6 +18,7 @@
 
 
 const http = require('http');
+require('dotenv').config();
 
 //############################################################################################################
 //############################################################################################################
@@ -29,10 +30,9 @@ const voiceRecording = require('./voice_recording');
 
 const server = http.createServer((req, res) => {
     // Set CORS headers
-    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080');
+    res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    // Handle preflight requests (CORS pre-checks for POST requests)
     if (req.method === 'OPTIONS') {
         res.writeHead(204);
         res.end();
@@ -54,8 +54,8 @@ const server = http.createServer((req, res) => {
 
 module.exports = {
     start: () => {
-        server.listen(9090, () => {
-            console.log('Electron internal server running on http://localhost:9090');
+        server.listen(process.env.BASE_INTERNAL_ELECTRON_SERVER_PORT, () => {
+            console.log(`Electron internal server running on ${process.env.BASE_INTERNAL_ELECTRON_SERVER_URL}`);
         });
     }
 };

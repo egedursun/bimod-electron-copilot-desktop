@@ -137,6 +137,15 @@
       "icon": "menu-icon tf-icons ti ti-settings",
       "slug": "copilot-settings",
       "url": "copilot:settings"
+    },
+    {
+      "menu_header": "MetaKanban Boards"
+    },
+    {
+      "name": "MetaKanban™",
+      "icon": "menu-icon tf-icons ti ti-layout",
+      "slug": "metakanban-connection",
+      "url": "metakanban:connection_manage"
     }
   ]
 }

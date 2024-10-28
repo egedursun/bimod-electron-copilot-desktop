@@ -26,5 +26,6 @@ urlpatterns = [
     path("connections/", include("apps.connections.urls")),
     path("chats/", include("apps.chats.urls")),
     path("copilot/", include("apps.copilot.urls")),
+    path("metakanban/", include("apps.metakanban.urls")),
     ########################################
 ]

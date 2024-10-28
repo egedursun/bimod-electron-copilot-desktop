@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "apps.connections",
     "apps.chats",
     "apps.copilot",
+    "apps.metakanban",
     ########################################
 ]
 

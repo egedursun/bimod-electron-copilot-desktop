@@ -108,11 +108,9 @@
 </script>
 <script>
     let isRecording = false;
-
     document.getElementById('record-button').addEventListener('click', () => {
         isRecording = !isRecording;
-
-        fetch('http://localhost:9090/toggle-recording', {
+        fetch('http://localhost:53001/toggle-recording', {
             method: 'POST',
         })
         .then(response => response.json())

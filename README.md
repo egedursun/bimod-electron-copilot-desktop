@@ -64,7 +64,6 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] If it is working, start working on the MEETING project (KANBAN) on mainframe (bimod.io)
 - [ ] Test the functionality (dashboard kanban topic creation, description creation, task assignment)
 - [ ] Take the fourth build of the application.
 - [ ] Put the updated version on the website.

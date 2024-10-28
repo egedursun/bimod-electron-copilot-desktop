@@ -1,0 +1,68 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}MetaKanban Board Connection{% endblock %}
+
+{% block vendor_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/libs/select2/select2.css' %}"/>
+{% endblock %}
+
+{% block vendor_js %}
+  {{ block.super }}
+  <script src="{% static 'vendor/libs/select2/select2.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h4><strong><i class="fa fa-cog me-2"></i> MetaKanban Board Connection</strong></h4>
+      </div>
+      <div class="card-body">
+
+        <!-- Display Messages -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <div>
+          <img src="{% static 'img/metakanban/kb-1.png' %}" alt="AI assistant icon" class="w-100 rounded"/>
+        </div>
+
+        <hr>
+
+        <!-- Connection Form -->
+        <form method="post" action="{% url 'metakanban:connection_create' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="board_connection_api_key" class="form-label"><strong>MetaKanban™ Board Authentication Key</strong></label>
+            <input type="text" class="form-control" id="board_connection_api_key" name="board_connection_api_key"
+                   value="{{ connection.board_connection_api_key }}" placeholder="Please enter the MetaKanban™ project board's authentication key here." required>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">
+            <i class="fa fa-save me-2"></i> <strong>Connect MetaKanban Board</strong>
+          </button>
+        </form>
+
+        <!-- Deletion Section -->
+        {% if connection %}
+          <hr>
+          <form method="post" action="{% url 'metakanban:connection_delete' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger mt-3">
+              <i class="fa fa-trash me-2"></i>
+              <strong>Delete Connection</strong>
+            </button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
