@@ -14,6 +14,13 @@
 
 ---
 
+**CREATING THE APPLICATION/BUILD:**
+```bash
+sudo npm run dist
+```
+
+---
+
 **MIGRATING THE DATABASE:**
 
 - Creating the Database Migrations:
@@ -54,10 +61,6 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Get builds for the v1_0_0 release.
-- [ ] Put the builds on AWS buckets (a new bucket for releases)
-- [ ] Make sure the bucket has open access permissions.
-- [ ] Test downloading process to see if it works.
 - [ ] Design the web page to download the Electron Copilot (and marketing content)
 - [ ] Develop Content on Main Landing Page + Connect the page with the main page. (MetaKanban, Project/Teams, MetaTempo)
 - [ ] Push the changes in the main server.
