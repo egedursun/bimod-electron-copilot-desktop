@@ -6,16 +6,6 @@
 
 ---
 
-**DEPENDENCIES:**
-
-- These will be needed to installed by an Bash script for the functions to work properly.
-
-```bash
-brew install sox
-```
-
----
-
 **DJANGO ADMIN PANEL CREDENTIALS**
 
 - **Username:** bimod
@@ -64,12 +54,6 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Commit and push the dev branch.
-- [ ] Switch to main, merge dev into main, commit and push main.
-- [ ] Switch to v1_0_0, merge main into v1_0_0, commit and push v1_0_0.
-- [ ] Update the env files in the v_1_0_0 branch.
-- [ ] Update the README.md file.
-- [ ] Commit and push the v1_0_0 branch.
 - [ ] Get builds for the v1_0_0 release.
 - [ ] Put the builds on AWS buckets (a new bucket for releases)
 - [ ] Make sure the bucket has open access permissions.
