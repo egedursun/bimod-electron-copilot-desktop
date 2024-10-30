@@ -36,6 +36,14 @@ python3 manage.py migrate --fake
 
 ---
 
+**RUNNING THE APPLICATION BUILD/CREATION**
+
+```bash
+sudo npm run dist
+  
+
+---
+
 **RUNNING THE APPLICATION:**
 
 **Django Server:**
@@ -54,10 +62,6 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Get builds for the v1_0_0 release.
-- [ ] Put the builds on AWS buckets (a new bucket for releases)
-- [ ] Make sure the bucket has open access permissions.
-- [ ] Test downloading process to see if it works.
 - [ ] Design the web page to download the Electron Copilot (and marketing content)
 - [ ] Develop Content on Main Landing Page + Connect the page with the main page. (MetaKanban, Project/Teams, MetaTempo)
 - [ ] Push the changes in the main server.
