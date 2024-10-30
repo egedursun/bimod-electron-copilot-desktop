@@ -16,23 +16,54 @@
  *  For permission inquiries, please contact: admin@Bimod.io.
  */
 
-const { app, BrowserWindow, screen } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const { exec } = require('child_process');
 const axios = require('axios');
 const path = require('path');
 const server = require('./electron_server/server');
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+// Determine the path to .env based on the environment
+const isProduction = app.isPackaged; // Checks if the app is running in production
+
+/*
+const envPath = isProduction
+  ? path.join(app.getAppPath(), 'Contents', 'Resources', '.env') // Production path
+  : path.join(__dirname, '.env'); // Development path
+ */
+
+const envPath = path.join(__dirname, '.env'); // Development path
+
+console.log("Attempting to load .env from:", envPath);
+dotenv.config({ path: envPath });
+
+// Debug logs to confirm loaded environment variables
+console.log('BASE_PORT:', process.env.BASE_PORT);
+console.log('BASE_URL:', process.env.BASE_URL);
+console.log('DEFAULT_SCREEN_WIDTH:', process.env.DEFAULT_SCREEN_WIDTH);
+console.log('DEFAULT_SCREEN_HEIGHT:', process.env.DEFAULT_SCREEN_HEIGHT);
 
 let mainWindow;
-let floatingButton;
 let isRecording = false;
 
+// Debugging logs to confirm paths and environment variables
+console.log('App Path:', app.getAppPath());
+console.log('BASE_PORT:', process.env.BASE_PORT);
+console.log('BASE_URL:', process.env.BASE_URL);
+console.log('DEFAULT_SCREEN_WIDTH:', process.env.DEFAULT_SCREEN_WIDTH);
+console.log('DEFAULT_SCREEN_HEIGHT:', process.env.DEFAULT_SCREEN_HEIGHT);
+
+// Construct the absolute path to manage.py
+const managePyPath = path.join(app.getAppPath(), 'manage.py');
+
+// Function to check if the server is running
 function checkServer() {
     return axios.get(process.env.BASE_URL)
         .then(() => true)
         .catch(() => false);
 }
 
+// Wait until the server is up and running
 async function waitForServer() {
     let serverUp = false;
     while (!serverUp) {
@@ -41,23 +72,29 @@ async function waitForServer() {
     }
 }
 
+// Function to create the main application window
 async function createWindow() {
   mainWindow = new BrowserWindow({
-    width: parseInt(process.env.DEFAULT_SCREEN_WIDTH),
-    height: parseInt(process.env.DEFAULT_SCREEN_HEIGHT),
+    width: parseInt(process.env.DEFAULT_SCREEN_WIDTH || '800'), // Fallback to default if undefined
+    height: parseInt(process.env.DEFAULT_SCREEN_HEIGHT || '600'), // Fallback to default if undefined
     resizable: true,
     webPreferences: {
       nodeIntegration: true,
     },
-    icon: path.join(__dirname, 'src/assets/img/common/logo.png')
+    icon: path.join(app.getAppPath(), 'src/assets/img/common/logo.icns') // Ensure correct icon format for macOS
   });
+
+  // Set the aspect ratio based on width and height environment variables
   mainWindow.setAspectRatio(parseInt(process.env.DEFAULT_SCREEN_WIDTH) / parseInt(process.env.DEFAULT_SCREEN_HEIGHT));
+
+  // Wait for the Django server to start and then load the main URL
   await waitForServer();
   mainWindow.loadURL(process.env.BASE_URL);
 }
 
+// Start the Django server and create the Electron window
 app.whenReady().then(async () => {
-    exec(`python3 manage.py runserver ${process.env.BASE_PORT}`, (err, stdout, stderr) => {
+    exec(`python3 ${managePyPath} runserver ${process.env.BASE_PORT || 55000}`, (err, stdout, stderr) => {
         if (err) {
             console.error(`Error starting Django server: ${err}`);
             return;
@@ -65,10 +102,12 @@ app.whenReady().then(async () => {
         console.log('Django server started:', stdout);
     });
 
+    // Create the main application window
     createWindow();
     server.start();
 });
 
+// Handle app lifecycle events
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });

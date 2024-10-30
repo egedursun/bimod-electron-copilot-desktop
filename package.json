@@ -3,18 +3,30 @@
   "version": "1.0.0",
   "main": "electron.js",
   "build": {
+    "asar": false,
     "appId": "com.bimod.copilot",
-    "productName": "Bimod Electron Copilot",
+    "productName": "Bimod-Electron-Copilot",
     "directories": {
       "output": "dist"
     },
     "files": [
-      "**/*"
+      "**/*",
+      ".venv/**/*"
     ],
     "icon": "src/assets/img/common/logo",
     "mac": {
-      "target": ["dmg", "zip"],
-      "category": "public.app-category.developer-tools"
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["arm64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["arm64"]
+        }
+      ],
+      "category": "public.app-category.developer-tools",
+      "icon": "src/assets/img/common/logo.icns"
     },
     "win": {
       "target": "nsis",
