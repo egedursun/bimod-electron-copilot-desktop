@@ -14,6 +14,13 @@
 
 ---
 
+**CREATING THE APPLICATION/BUILD:**
+```bash
+sudo npm run dist
+```
+
+---
+
 **MIGRATING THE DATABASE:**
 
 - Creating the Database Migrations:
