@@ -1,0 +1,30 @@
+#  Copyright (c) 2024 BMD™ Autonomous Holdings. All rights reserved.
+#
+#  Project: Bimod.io™
+#  File: metatempo_connection_admin.py
+#  Last Modified: 2024-10-30 00:37:34
+#  Author: Ege Dogan Dursun (Co-Founder & Chief Executive Officer / CEO @ BMD™ Autonomous Holdings)
+#  Created: 2024-10-30 00:37:35
+#
+#  This software is proprietary and confidential. Unauthorized copying,
+#  distribution, modification, or use of this software, whether for
+#  commercial, academic, or any other purpose, is strictly prohibited
+#  without the prior express written permission of BMD™ Autonomous
+#  Holdings.
+#
+#   For permission inquiries, please contact: admin@Bimod.io.
+
+
+from django.contrib import admin
+
+from apps.metatempo.models import MetaTempoConnectionConfiguration
+from apps.metatempo.utils import META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_LIST, \
+    META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_FILTER, META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_SEARCH
+
+
+@admin.register(MetaTempoConnectionConfiguration)
+class MetaTempoConnectionConfigurationAdmin(admin.ModelAdmin):
+    list_display = META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_LIST
+    list_filter = META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_FILTER
+    search_fields = META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_SEARCH
+    ordering = ('-created_at',)

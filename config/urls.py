@@ -13,10 +13,11 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
-
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from apps.dashboards.views import DashboardView_Index
+from config import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,5 +28,9 @@ urlpatterns = [
     path("chats/", include("apps.chats.urls")),
     path("copilot/", include("apps.copilot.urls")),
     path("metakanban/", include("apps.metakanban.urls")),
+    path("metatempo/", include("apps.metatempo.urls")),
     ########################################
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

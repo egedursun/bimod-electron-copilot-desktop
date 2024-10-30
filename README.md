@@ -64,21 +64,9 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Test the functionality (dashboard kanban topic creation, description creation, task assignment)
-- [ ] Take the fourth build of the application.
-- [ ] Put the updated version on the website.
-
-**RELEASE 4**
-
-- [ ] Create the automated process to take screenshots and interpret it to understand daily works (Tempo Project)
-- [ ] Create the services and protocols to communicate the tempo.
-- [ ] If working, start working on the TEMPO project, on mainframe (bimod.io).
-- [ ] Test the functionality (tempo inspection, people task summarization, meta-reporting, performance analysis,
-  kanban comparison analysis, etc.)
-- [ ] Take the fifth build of the application.
+- [ ] Take the first build of the application.
 - [ ] Put the updated version on the website.
 
 **RELEASE 5**
-
 
 ---

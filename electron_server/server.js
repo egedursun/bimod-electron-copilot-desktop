@@ -25,6 +25,7 @@ require('dotenv').config();
 // HANDLERS
 //############################################################################################################
 const voiceRecording = require('./voice_recording');
+const tempoTracking = require('./tempo_tracking');
 //############################################################################################################
 //############################################################################################################
 
@@ -44,7 +45,10 @@ const server = http.createServer((req, res) => {
     //############################################################################################################
     if (req.url.startsWith('/toggle-recording')) {
         voiceRecording.handleToggleRecording(req, res);
+    } else if (req.url.startsWith('/toggle-tracking')) {
+        tempoTracking.toggleTracking(req, res);
     } else {
+        // Only send 404 if no other route was matched
         res.writeHead(404);
         res.end();
     }

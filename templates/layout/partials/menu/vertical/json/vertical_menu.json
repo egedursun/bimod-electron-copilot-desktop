@@ -146,6 +146,15 @@
       "icon": "menu-icon tf-icons ti ti-layout",
       "slug": "metakanban-connection",
       "url": "metakanban:connection_manage"
+    },
+    {
+      "menu_header": "MetaTempo Connections"
+    },
+    {
+      "name": "MetaTempo™ Tracker",
+      "icon": "menu-icon tf-icons ti ti-disc",
+      "slug": "metatempo-connection",
+      "url": "metatempo:connections_manage"
     }
   ]
 }

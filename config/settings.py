@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "apps.chats",
     "apps.copilot",
     "apps.metakanban",
+    "apps.metatempo",
     ########################################
 ]
 
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "config.middleware.LoadingBarMiddleware",
     'django.contrib.messages.middleware.MessageMiddleware',
+    'config.middleware.MetaTempoConnectionUpdateMiddleware',
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -194,3 +196,5 @@ JAZZMIN_SETTINGS = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+SERVER_BASE_URL = os.environ.get("SERVER_BASE_URL", default="http://127.0.0.1:8000")

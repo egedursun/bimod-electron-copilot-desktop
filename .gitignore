@@ -11,6 +11,7 @@ staticfiles/
 __pycache__/
 *.py[cod]
 *$py.class
+media/**
 
 # Node Modules
 node_modules/

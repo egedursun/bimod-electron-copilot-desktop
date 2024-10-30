@@ -1,0 +1,73 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}MetaTempo Connection Management{% endblock %}
+
+{% block vendor_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/libs/select2/select2.css' %}"/>
+{% endblock %}
+
+{% block vendor_js %}
+  {{ block.super }}
+  <script src="{% static 'vendor/libs/select2/select2.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h4><strong><i class="fa fa-cog me-2"></i> MetaTempo Connection Management</strong></h4>
+      </div>
+      <div class="card-body">
+
+        <!-- Display Messages -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <div>
+          <img src="{% static 'img/metatempo/mtmp-1.png' %}" alt="MetaTempo icon" class="w-100 rounded"/>
+        </div>
+
+        <hr>
+
+        <!-- Connection Form -->
+        <form method="post" action="{% url 'metatempo:connection_create' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="connection_api_key" class="form-label"><strong>Connection API Key</strong></label>
+            <input type="text" class="form-control" id="connection_api_key" name="connection_api_key"
+                   value="{{ connection.connection_api_key }}" placeholder="Enter the connection API key here" required>
+          </div>
+          <div class="mb-3">
+            <label for="user_auth_key" class="form-label"><strong>User Auth Key</strong></label>
+            <input type="text" class="form-control" id="user_auth_key" name="user_auth_key"
+                   value="{{ connection.user_auth_key }}" placeholder="Enter the user authentication key here" required>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">
+            <i class="fa fa-save me-2"></i> <strong>Save MetaTempo Connection</strong>
+          </button>
+        </form>
+
+        <!-- Deletion Section -->
+        {% if connection %}
+          <hr>
+          <form method="post" action="{% url 'metatempo:connection_delete' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger mt-3">
+              <i class="fa fa-trash me-2"></i>
+              <strong>Delete Connection</strong>
+            </button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

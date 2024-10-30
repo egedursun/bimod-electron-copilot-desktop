@@ -16,3 +16,4 @@
 
 
 from .loading_bar_middleware import *
+from .metatempo_connection_update_middleware import *
