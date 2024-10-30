@@ -49,7 +49,7 @@ async function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
-    icon: path.join(__dirname, 'assets/img/common/logo.png')
+    icon: path.join(__dirname, 'src/assets/img/common/logo.png')
   });
   mainWindow.setAspectRatio(parseInt(process.env.DEFAULT_SCREEN_WIDTH) / parseInt(process.env.DEFAULT_SCREEN_HEIGHT));
   await waitForServer();

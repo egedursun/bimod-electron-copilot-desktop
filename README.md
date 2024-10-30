@@ -64,8 +64,23 @@ sudo npx electron electron.js
 
 ### TODO LIST
 
-- [ ] Take the first build of the application.
-- [ ] Put the updated version on the website.
+- [ ] Commit and push the dev branch.
+- [ ] Switch to main, merge dev into main, commit and push main.
+- [ ] Switch to v1_0_0, merge main into v1_0_0, commit and push v1_0_0.
+- [ ] Update the env files in the v_1_0_0 branch.
+- [ ] Update the README.md file.
+- [ ] Commit and push the v1_0_0 branch.
+- [ ] Get builds for the v1_0_0 release.
+- [ ] Put the builds on AWS buckets (a new bucket for releases)
+- [ ] Make sure the bucket has open access permissions.
+- [ ] Test downloading process to see if it works.
+- [ ] Design the web page to download the Electron Copilot (and marketing content)
+- [ ] Develop Content on Main Landing Page + Connect the page with the main page. (MetaKanban, Project/Teams, MetaTempo)
+- [ ] Push the changes in the main server.
+- [ ] Create a label for version on GitHub
+- [ ] Update the GitHub board.
+
+---
 
 **RELEASE 5**
 
