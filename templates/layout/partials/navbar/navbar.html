@@ -82,9 +82,11 @@
         <!-- / Style Switcher-->
       
         <!-- Record Meeting -->
-          <a class="btn btn-primary py-1 ps-2 pe-4 btn-sm ms-12 me-4 my-1" href="javascript:void(0);" id="record-button" title="Start Meeting Record">
-            <i id="record-icon" class="ti ti-player-record-filled ti-md p-1 text-success rounded-circle"></i><strong><small id="record-text">Start Meeting Record</small></strong>
-          </a>
+        <a class="btn btn-primary py-1 ps-2 pe-4 btn-sm ms-12 me-4 my-1" href="javascript:void(0);" id="record-button" title="Start Meeting Record">
+          <i id="record-icon" class="ti ti-player-record-filled ti-md p-1 text-success rounded-circle"></i>
+          <strong><small id="record-text">Start Meeting Record</small></strong>
+          <strong><span id="record-timer" class="ms-4 p-1 btn-warning rounded" style="display: none;">00:00:00</span></strong>
+        </a>
         <!-- / Record Meeting -->
       
       </div>
@@ -107,34 +109,67 @@
     }
 </script>
 <script>
-    let isRecording = false;
-    document.getElementById('record-button').addEventListener('click', () => {
-        isRecording = !isRecording;
-        fetch('http://localhost:53001/toggle-recording', {
-            method: 'POST',
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.status);
+  let isRecording = false;
+  let timerInterval;
+  let startTime;
 
-            // Update icon appearance and button text
-            const recordButton = document.getElementById('record-button');
-            const recordIcon = document.getElementById('record-icon');
-            const recordText = document.getElementById('record-text');
+  // Function to format the timer display as HH:MM:SS
+  function formatTime(seconds) {
+    const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    const secs = String(seconds % 60).padStart(2, '0');
+    return `${hrs}:${mins}:${secs}`;
+  }
 
-            if (isRecording) {
-                recordIcon.classList.replace('text-success', 'text-danger');
-                recordIcon.classList.replace('ti-player-record-filled', 'ti-player-stop-filled');
-                recordText.textContent = "Stop Meeting Record";
-                recordButton.title = "Stop Meeting Record";
-            } else {
-                recordIcon.classList.replace('text-danger', 'text-success');
-                recordIcon.classList.replace('ti-player-stop-filled', 'ti-player-record-filled');
-                recordText.textContent = "Start Meeting Record";
-                recordButton.title = "Start Meeting Recording";
-            }
-        })
-        .catch(error => console.error('Error toggling recording:', error));
-    });
+  // Function to update the timer
+  function updateTimer() {
+    const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    document.getElementById('record-timer').textContent = formatTime(elapsedTime);
+  }
+
+  // Event listener for recording button
+  document.getElementById('record-button').addEventListener('click', () => {
+    isRecording = !isRecording;
+
+    // Toggle recording on the backend
+    fetch('http://localhost:53001/toggle-recording', {
+      method: 'POST',
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.status);
+
+      // Update icon appearance, button text, and timer display
+      const recordButton = document.getElementById('record-button');
+      const recordIcon = document.getElementById('record-icon');
+      const recordText = document.getElementById('record-text');
+      const recordTimer = document.getElementById('record-timer');
+
+      if (isRecording) {
+        // Start the timer
+        startTime = Date.now();
+        timerInterval = setInterval(updateTimer, 1000);
+        recordTimer.style.display = 'inline';  // Show timer
+
+        // Update icon and text for recording state
+        recordIcon.classList.replace('text-success', 'text-danger');
+        recordIcon.classList.replace('ti-player-record-filled', 'ti-player-stop-filled');
+        recordText.textContent = "Stop Meeting Record";
+        recordButton.title = "Stop Meeting Record";
+      } else {
+        // Stop the timer
+        clearInterval(timerInterval);
+        recordTimer.textContent = '00:00:00';
+        recordTimer.style.display = 'none';  // Hide timer
+
+        // Reset icon and text for stopped state
+        recordIcon.classList.replace('text-danger', 'text-success');
+        recordIcon.classList.replace('ti-player-stop-filled', 'ti-player-record-filled');
+        recordText.textContent = "Start Meeting Record";
+        recordButton.title = "Start Meeting Recording";
+      }
+    })
+    .catch(error => console.error('Error toggling recording:', error));
+  });
 </script>
 {% endblock %}
