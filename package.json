@@ -24,12 +24,20 @@
     "win": {
       "target": "nsis",
       "icon": "src/assets/img/common/logo.ico"
+    },
+    "linux": {
+      "target": [
+        "appImage",
+        "deb",
+        "tar.gz"
+      ],
+      "icon": "src/assets/img/common/logo.png"
     }
   },
   "scripts": {
     "start": "electron electron.js",
     "build": "electron-builder",
-    "dist": "electron-builder --mac --win",
+    "dist": "electron-builder --mac --win --linux",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
