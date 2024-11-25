@@ -14,19 +14,7 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 #
-#  Project: Bimod.io™
-#  File: remove_assistant_connection_views.py
-#  Last Modified: 2024-10-25 04:31:52
-#  Author: Ege Dogan Dursun (Co-Founder & Chief Executive Officer / CEO @ BMD™ Autonomous Holdings)
-#  Created: 2024-10-25 04:31:52
-#
-#  This software is proprietary and confidential. Unauthorized copying,
-#  distribution, modification, or use of this software, whether for
-#  commercial, academic, or any other purpose, is strictly prohibited
-#  without the prior express written permission of BMD™ Autonomous
-#  Holdings.
-#
-#   For permission inquiries, please contact: admin@Bimod.io.
+
 import logging
 
 from django.contrib import messages
@@ -42,6 +30,7 @@ logger = logging.getLogger(__name__)
 class ConnectionView_AssistantRemove(TemplateView):
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+
         context['connections'] = AssistantConnection.objects.all()
         return context
 
@@ -53,6 +42,7 @@ class ConnectionView_AssistantRemove(TemplateView):
                 connection = AssistantConnection.objects.get(id=connection_id)
                 connection.delete()
                 messages.success(request, "Assistant connection successfully deleted.")
+
             except AssistantConnection.DoesNotExist:
                 messages.error(request, "Assistant connection not found.")
         else:

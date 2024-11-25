@@ -26,9 +26,11 @@ class MetaKanbanView_BoardConnectionDelete(View):
         return self.post(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+
         try:
             connection = get_object_or_404(MetaKanbanBoardConnection)
             connection.delete()
+
         except Exception as e:
             messages.error(request, "Failed to delete MetaKanban Board connection.")
             return redirect("metakanban:connection_manage")

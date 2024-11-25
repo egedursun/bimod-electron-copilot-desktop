@@ -13,19 +13,33 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+
+
 from django.urls import path
 
 from apps.metakanban.views import (MetaKanbanView_BoardConnectionCreate, MetaKanbanView_BoardConnectionDelete,
                                    MetaKanbanView_BoardConnectionManage)
 
-
 app_name = 'metakanban'
 
-
 urlpatterns = [
-    path('board/connection/create/', MetaKanbanView_BoardConnectionCreate.as_view(), name='connection_create'),
-    path('board/connection/delete/', MetaKanbanView_BoardConnectionDelete.as_view(), name='connection_delete'),
-    path('board/connection/manage/', MetaKanbanView_BoardConnectionManage.as_view(
-        template_name='metakanban/meta_kanban_board_connection.html'
-    ), name='connection_manage'),
+    path(
+        'board/connection/create/',
+        MetaKanbanView_BoardConnectionCreate.as_view(),
+        name='connection_create'
+    ),
+
+    path(
+        'board/connection/delete/',
+        MetaKanbanView_BoardConnectionDelete.as_view(),
+        name='connection_delete'
+    ),
+
+    path(
+        'board/connection/manage/',
+        MetaKanbanView_BoardConnectionManage.as_view(
+            template_name='metakanban/meta_kanban_board_connection.html'
+        ),
+        name='connection_manage'
+    ),
 ]

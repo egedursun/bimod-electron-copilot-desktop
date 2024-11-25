@@ -21,3 +21,5 @@ from .create_leanmod_chat_views import *
 from .remove_leanmod_chat_views import *
 from .remove_assistant_chat_views import *
 from .remove_orchestration_chat_views import *
+from .create_voidforger_chat_views import *
+from .remove_voidforger_chat_views import *

@@ -22,22 +22,69 @@ from apps.copilot.utils import COPILOT_CONNECTION_TYPES, CopilotConnectionTypesN
 
 class CopilotModal(models.Model):
     is_active = models.BooleanField(default=True)
-    active_connection_type = models.CharField(max_length=255, choices=COPILOT_CONNECTION_TYPES,
-                                              default=CopilotConnectionTypesNames.ASSISTANT)
+    active_connection_type = models.CharField(
+        max_length=255,
+        choices=COPILOT_CONNECTION_TYPES,
+        default=CopilotConnectionTypesNames.VOIDFORGER
+    )
 
-    selected_assistant = models.ForeignKey('connections.AssistantConnection', on_delete=models.CASCADE,
-                                           null=True, blank=True)
-    selected_leanmod = models.ForeignKey('connections.LeanmodConnection', on_delete=models.CASCADE,
-                                         null=True, blank=True)
-    selected_orchestration = models.ForeignKey('connections.OrchestrationConnection', on_delete=models.CASCADE,
-                                               null=True, blank=True)
+    selected_assistant = models.ForeignKey(
+        'connections.AssistantConnection',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
 
-    selected_assistant_chat = models.ForeignKey('chats.MultimodalAssistantChat', on_delete=models.CASCADE,
-                                                null=True, blank=True)
-    selected_leanmod_chat = models.ForeignKey('chats.MultimodalLeanmodChat', on_delete=models.CASCADE,
-                                              null=True, blank=True)
-    selected_orchestration_chat = models.ForeignKey('chats.MultimodalOrchestrationChat', on_delete=models.CASCADE,
-                                                    null=True, blank=True)
+    selected_leanmod = models.ForeignKey(
+        'connections.LeanmodConnection',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    selected_orchestration = models.ForeignKey(
+        'connections.OrchestrationConnection',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    selected_voidforger = models.ForeignKey(
+        'connections.VoidForgerConnection',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    #####
+
+    selected_assistant_chat = models.ForeignKey(
+        'chats.MultimodalAssistantChat',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    selected_leanmod_chat = models.ForeignKey(
+        'chats.MultimodalLeanmodChat',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    selected_orchestration_chat = models.ForeignKey(
+        'chats.MultimodalOrchestrationChat',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    selected_voidforger_chat = models.ForeignKey(
+        'chats.MultimodalVoidForgerChat',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
 
     last_toggled_is_active_at = models.DateTimeField(auto_now=True)
 

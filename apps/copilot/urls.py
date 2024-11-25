@@ -13,15 +13,39 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+
 from django.urls import path
 
-from apps.copilot.views import (CopilotView_Settings, CopilotView_MessagePopup, CopilotView_Modal)
+from apps.copilot.views import (
+    CopilotView_Settings,
+    CopilotView_MessagePopup,
+    CopilotView_Modal
+)
 
 app_name = 'copilot'
 
 urlpatterns = [
-    path('settings/', CopilotView_Settings.as_view(template_name='copilot/copilot_settings.html'), name='settings'),
-    path('message_popup/', CopilotView_MessagePopup.as_view(template_name='copilot/copilot_message_popup.html'),
-         name='message_popup'),
-    path('modal/', CopilotView_Modal.as_view(template_name='copilot/copilot_modal.html'), name='modal'),
+    path(
+        'settings/',
+        CopilotView_Settings.as_view(
+            template_name='copilot/copilot_settings.html'
+        ),
+        name='settings'
+    ),
+
+    path(
+        'message_popup/',
+        CopilotView_MessagePopup.as_view(
+            template_name='copilot/copilot_message_popup.html'
+        ),
+        name='message_popup'
+    ),
+
+    path(
+        'modal/',
+        CopilotView_Modal.as_view(
+            template_name='copilot/copilot_modal.html'
+        ),
+        name='modal'
+    ),
 ]

@@ -21,3 +21,5 @@ from .create_orchestration_connection_views import *
 from .remove_orchestration_connection_views import *
 from .remove_leanmod_connection_views import *
 from .remove_assistant_connection_views import *
+from .create_voidforger_connection_views import *
+from .remove_voidforger_connection_views import *

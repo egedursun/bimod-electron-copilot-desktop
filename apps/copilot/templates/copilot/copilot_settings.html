@@ -145,7 +145,31 @@
                   {% endfor %}
                 </select>
               </div>
+
+              <!-- VoidForger Service Picker -->
+              <div class="col-md-4 mb-4 voidforger-picker">
+                <label for="selected_voidforger" class="form-label">Select VoidForger</label>
+                <select class="form-select select2" id="selected_voidforger" name="selected_voidforger" {% if not voidforger_connections %}disabled{% endif %}>
+                  <option value="" disabled selected>Select a VoidForger Connection</option>
+                  {% for connection in voidforger_connections %}
+                    <option value="{{ connection.id }}" {% if copilot_instance.selected_voidforger_id == connection.id %}selected{% endif %}>{{ connection.connection_endpoint }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-4 voidforger-chat-picker">
+                <label for="selected_voidforger_chat" class="form-label">Select VoidForger Chat</label>
+                <select class="form-select select2" id="selected_voidforger_chat" name="selected_voidforger_chat" {% if not voidforger_chats %}disabled{% endif %}>
+                  <option value="" disabled selected>Select a VoidForger Chat</option>
+                  {% for chat in voidforger_chats %}
+                    <option value="{{ chat.id }}" {% if copilot_instance.selected_voidforger_chat_id == chat.id %}selected{% endif %}>{{ chat.uuid }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
             </div>
+
+
 
             <button type="submit" class="btn btn-primary mt-4 w-25">
               <strong>
@@ -153,6 +177,7 @@
               Save Settings</strong>
             </button>
           </form>
+
         {% else %}
           <form method="post">
             {% csrf_token %}
@@ -176,7 +201,7 @@
       // Toggle required fields based on selected service type
       $('#active_connection_type').on('change', function () {
         const type = $(this).val();
-        $('.assistant-picker, .assistant-chat-picker, .leanmod-picker, .leanmod-chat-picker, .orchestration-picker, .orchestration-chat-picker').hide();
+        $('.assistant-picker, .assistant-chat-picker, .leanmod-picker, .leanmod-chat-picker, .orchestration-picker, .orchestration-chat-picker, .voidforger-picker, .voidforger-chat-picker').hide();
         $(`.${type}-picker, .${type}-chat-picker`).show();
       }).trigger('change');
 

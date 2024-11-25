@@ -19,7 +19,11 @@ from django.db import models
 
 
 class MetaKanbanBoardConnection(models.Model):
-    board_connection_api_key = models.CharField(max_length=255, null=True, blank=True)
+    board_connection_api_key = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -30,6 +34,14 @@ class MetaKanbanBoardConnection(models.Model):
         verbose_name = 'Meta Kanban Board Connection'
         verbose_name_plural = 'Meta Kanban Board Connections'
         indexes = [
-            models.Index(fields=['board_connection_api_key']),
-            models.Index(fields=['created_at']),
+            models.Index(
+                fields=[
+                    'board_connection_api_key'
+                ]
+            ),
+            models.Index(
+                fields=[
+                    'created_at'
+                ]
+            ),
         ]

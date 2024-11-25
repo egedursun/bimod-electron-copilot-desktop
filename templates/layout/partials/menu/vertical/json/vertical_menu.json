@@ -21,6 +21,12 @@
       "slug": "orchestration-chat-dashboard",
       "url": "dashboards:orchestration_dashboard"
     },
+     {
+      "name": "VoidForger Dash",
+      "icon": "menu-icon tf-icons ti ti-dashboard",
+      "slug": "voidforger-chat-dashboard",
+      "url": "dashboards:voidforger_dashboard"
+    },
     {
       "menu_header": "Services"
     },
@@ -76,6 +82,23 @@
       ]
     },
     {
+      "name": "VoidForgers",
+      "icon": "menu-icon tf-icons ti ti-cloud",
+      "slug": "voidforger-services",
+      "submenu": [
+        {
+          "name": "Connect VoidForger",
+          "slug": "voidforger-service-connect",
+          "url": "connections:voidforger_create"
+        },
+        {
+          "name": "Manage VoidForgers",
+          "slug": "voidforger-service-disconnect",
+          "url": "connections:voidforger_remove"
+        }
+      ]
+    },
+    {
       "menu_header": "Chats"
     },
     {
@@ -126,6 +149,23 @@
           "name": "Manage Orchestration Chats",
           "slug": "orchestration-service-delete",
           "url": "chats:orchestration_remove"
+        }
+      ]
+    },
+    {
+      "name": "VoidForger Chats",
+      "icon": "menu-icon tf-icons ti ti-message",
+      "slug": "voidforger-services",
+      "submenu": [
+        {
+          "name": "Create VoidForger Chat",
+          "slug": "voidforger-service-create",
+          "url": "chats:voidforger_create"
+        },
+        {
+          "name": "Manage VoidForger Chats",
+          "slug": "voidforger-service-delete",
+          "url": "chats:voidforger_remove"
         }
       ]
     },

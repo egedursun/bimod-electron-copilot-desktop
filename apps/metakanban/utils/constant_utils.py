@@ -14,6 +14,13 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 
-META_KANBAN_BOARD_CONNECTION_ADMIN_LIST = ['board_connection_api_key', 'created_at']
-META_KANBAN_BOARD_CONNECTION_ADMIN_SEARCH = ['board_connection_api_key']
-META_KANBAN_BOARD_CONNECTION_ADMIN_FILTER = ['created_at']
+META_KANBAN_BOARD_CONNECTION_ADMIN_LIST = [
+    'board_connection_api_key',
+    'created_at'
+]
+META_KANBAN_BOARD_CONNECTION_ADMIN_SEARCH = [
+    'board_connection_api_key'
+]
+META_KANBAN_BOARD_CONNECTION_ADMIN_FILTER = [
+    'created_at'
+]

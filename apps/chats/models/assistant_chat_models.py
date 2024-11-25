@@ -12,30 +12,24 @@
 #  without the prior express written permission of BMD™ Autonomous
 #  Holdings.
 #
-#   For permission inquiries, please contact: admin@Bimod.io.
-#
-#  Project: Bimod.io™
-#  File: chat_models.py
-#  Last Modified: 2024-10-25 04:28:04
-#  Author: Ege Dogan Dursun (Co-Founder & Chief Executive Officer / CEO @ BMD™ Autonomous Holdings)
-#  Created: 2024-10-25 04:28:04
-#
-#  This software is proprietary and confidential. Unauthorized copying,
-#  distribution, modification, or use of this software, whether for
-#  commercial, academic, or any other purpose, is strictly prohibited
-#  without the prior express written permission of BMD™ Autonomous
-#  Holdings.
-#
-#   For permission inquiries, please contact: admin@Bimod.io.
 
 
 from django.db import models
 
 
 class MultimodalAssistantChat(models.Model):
-    uuid = models.CharField(max_length=1000, null=True, blank=True)
-    connection = models.ForeignKey('connections.AssistantConnection', on_delete=models.CASCADE,
-                                   related_name='multimodal_assistant_chats', null=True, blank=True)
+    uuid = models.CharField(
+        max_length=1000,
+        null=True,
+        blank=True
+    )
+    connection = models.ForeignKey(
+        'connections.AssistantConnection',
+        on_delete=models.CASCADE,
+        related_name='multimodal_assistant_chats',
+        null=True,
+        blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -46,5 +40,9 @@ class MultimodalAssistantChat(models.Model):
         verbose_name_plural = "Multimodal Assistant Chats"
         ordering = ["-created_at"]
         indexes = [
-            models.Index(fields=["created_at"]),
+            models.Index(
+                fields=[
+                    "created_at"
+                ]
+            ),
         ]

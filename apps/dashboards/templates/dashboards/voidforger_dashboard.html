@@ -1,0 +1,122 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}VoidForger Chat Dashboard{% endblock %}
+
+{% block vendor_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'vendor/libs/select2/select2.css' %}">
+{% endblock %}
+
+{% block vendor_js %}
+  {{ block.super }}
+  <script src="{% static 'vendor/libs/select2/select2.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-0">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h6><strong class="text-white"><i class="fa fa-comments me-2 text-white"></i> VoidForger Chat Dashboard</strong></h6>
+    </div>
+    <div class="card-body mt-4">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- Chat Picker -->
+      <form method="get" action=".">
+        <div class="mb-4 mt-4">
+          <label for="chat-picker" class="form-label"><strong>Select Chat</strong></label>
+          <select id="chat-picker" name="chat_id" class="form-select select2" onchange="this.form.submit();" style="width: 100%;">
+            <option value="" selected>Select a chat</option>
+            {% for chat in available_chats %}
+              <option value="{{ chat.id }}" {% if selected_chat and chat.id == selected_chat.id %}selected{% endif %}>{{ chat }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </form>
+
+      {% if selected_chat %}
+        <!-- Chat History -->
+        <div class="chat-history border p-3 mb-4 rounded shadow-sm" style="height: 350px; overflow-y: auto;">
+          {% for message in chat_messages %}
+            {% if message.message_role != "system" %}
+              <div class="d-flex mb-2 {% if message.message_role == 'user' %}justify-content-end{% else %}justify-content-start{% endif %}">
+                <div class="p-2 {% if message.message_role == 'user' %}bg-label-dark{% else %}btn-primary{% endif %} rounded" style="max-width: 80%;">
+                  <strong>
+                    <i class="fa {% if message.message_role == 'user' %}fa-user{% else %}fa-robot{% endif %} me-2"></i>
+                    {% if message.message_role == 'user' %}You{% else %}VoidForger{% endif %}<br><br>
+                  </strong>
+                  <p class="btn-white p-1 py-2 rounded w-100" style="font-size: 10px;">
+                    <i class="fa fa-clock ms-1 me-1"></i>
+                    <strong class="text-black">{{ message.sent_at }}</strong>
+                  </p>
+                  <hr>
+                  <p class="mb-4">{{ message.message_text|linebreaksbr }}</p>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Message Form -->
+        <form method="post" action=".">
+          {% csrf_token %}
+          <input type="hidden" name="chat_id" value="{{ selected_chat.id }}">
+          <div class="input-group mb-2">
+            <textarea class="form-control" name="message_content" placeholder="Type your message here..." rows="1" required></textarea>
+          </div>
+
+          <div class="row">
+            <!-- File URL Input -->
+            <div class="col-6 mb-3">
+              <label for="file-urls" class="form-label"><strong>File URLs</strong></label>
+              <textarea id="file-urls" name="file_uris" class="form-control" placeholder="Enter file URLs separated by commas" rows="1"></textarea>
+            </div>
+
+            <!-- Image URL Input -->
+            <div class="col-6 mb-3">
+              <label for="image-urls" class="form-label"><strong>Image URLs</strong></label>
+              <textarea id="image-urls" name="image_uris" class="form-control" placeholder="Enter image URLs separated by commas" rows="1"></textarea>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-3">
+            <button class="btn btn-sm btn-danger me-2" onclick="document.location.reload()">
+              <i class="fa fa-trash-can"></i>
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm ms-auto">
+              <i class="fa fa-paper-plane me-1"></i><strong>Send Message</strong>
+            </button>
+          </div>
+        </form>
+      {% else %}
+        <p class="text-muted">Please select a chat to view messages.</p>
+      {% endif %}
+
+      <hr>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+  {{ block.super }}
+  <script>
+    $(document).ready(function() {
+      $('#chat-picker').select2({ width: '100%' });
+      var chatHistory = document.querySelector('.chat-history');
+      if (chatHistory) {
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      }
+    });
+  </script>
+{% endblock %}

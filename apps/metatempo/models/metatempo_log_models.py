@@ -21,11 +21,13 @@ from django.db import models
 
 class MetaTempoLogRecord(models.Model):
     identifier_uuid = models.UUIDField(default=uuid.uuid4)
-    screenshot_image_png = models.ImageField(upload_to='metatempo/logs/', null=True, blank=True)
+    screenshot_image_png = models.ImageField(
+        upload_to='metatempo/logs/',
+        null=True,
+        blank=True
+    )
 
-    # Will also be used as the last time tracked field.
     timestamp = models.DateTimeField(auto_now_add=True)
-
     is_sent_successfully = models.BooleanField(default=False)
 
     def __str__(self):
@@ -37,6 +39,14 @@ class MetaTempoLogRecord(models.Model):
         verbose_name_plural = 'MetaTempo Log Records'
         ordering = ['-timestamp']
         indexes = [
-            models.Index(fields=['identifier_uuid']),
-            models.Index(fields=['timestamp']),
+            models.Index(
+                fields=[
+                    'identifier_uuid'
+                ]
+            ),
+            models.Index(
+                fields=[
+                    'timestamp'
+                ]
+            ),
         ]

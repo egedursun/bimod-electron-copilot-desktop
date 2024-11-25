@@ -19,6 +19,7 @@ COPILOT_CONNECTION_TYPES = [
     ('assistant', 'Assistant'),
     ('leanmod', 'LeanMod'),
     ('orchestration', 'Orchestration'),
+    ('voidforger', 'VoidForger'),
 ]
 
 
@@ -26,6 +27,7 @@ class CopilotConnectionTypesNames:
     ASSISTANT = 'assistant'
     LEANMOD = 'leanmod'
     ORCHESTRATION = 'orchestration'
+    VOIDFORGER = 'voidforger'
 
     @staticmethod
     def as_list():
@@ -33,9 +35,19 @@ class CopilotConnectionTypesNames:
             CopilotConnectionTypesNames.ASSISTANT,
             CopilotConnectionTypesNames.LEANMOD,
             CopilotConnectionTypesNames.ORCHESTRATION,
+            CopilotConnectionTypesNames.VOIDFORGER,
         ]
 
 
-COPILOT_MODAL_ADMIN_LIST = ['active_connection_type', 'is_active', 'last_toggled_is_active_at']
-COPILOT_MODAL_ADMIN_FILTER = ['active_connection_type', 'is_active']
-COPILOT_MODAL_ADMIN_SEARCH = ['active_connection_type']
+COPILOT_MODAL_ADMIN_LIST = [
+    'active_connection_type',
+    'is_active',
+    'last_toggled_is_active_at'
+]
+COPILOT_MODAL_ADMIN_FILTER = [
+    'active_connection_type',
+    'is_active'
+]
+COPILOT_MODAL_ADMIN_SEARCH = [
+    'active_connection_type'
+]

@@ -18,8 +18,11 @@
 from django.contrib import admin
 
 from apps.metakanban.models import MetaKanbanBoardConnection
-from apps.metakanban.utils import META_KANBAN_BOARD_CONNECTION_ADMIN_LIST, META_KANBAN_BOARD_CONNECTION_ADMIN_SEARCH, \
+from apps.metakanban.utils import (
+    META_KANBAN_BOARD_CONNECTION_ADMIN_LIST,
+    META_KANBAN_BOARD_CONNECTION_ADMIN_SEARCH,
     META_KANBAN_BOARD_CONNECTION_ADMIN_FILTER
+)
 
 
 @admin.register(MetaKanbanBoardConnection)

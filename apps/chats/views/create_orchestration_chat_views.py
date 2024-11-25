@@ -14,19 +14,7 @@
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
 #
-#  Project: Bimod.io™
-#  File: create_orchestration_chat_views.py
-#  Last Modified: 2024-10-25 04:33:22
-#  Author: Ege Dogan Dursun (Co-Founder & Chief Executive Officer / CEO @ BMD™ Autonomous Holdings)
-#  Created: 2024-10-25 04:33:22
-#
-#  This software is proprietary and confidential. Unauthorized copying,
-#  distribution, modification, or use of this software, whether for
-#  commercial, academic, or any other purpose, is strictly prohibited
-#  without the prior express written permission of BMD™ Autonomous
-#  Holdings.
-#
-#   For permission inquiries, please contact: admin@Bimod.io.
+
 import logging
 import uuid
 
@@ -44,17 +32,21 @@ logger = logging.getLogger(__name__)
 class ChatView_OrchestrationCreate(TemplateView):
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+
         context['connections'] = OrchestrationConnection.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
+
         connection_id = request.POST.get('connection')
+
         if not connection_id:
             messages.error(request, "Please select an Orchestration connection.")
             return redirect('chats:orchestration_create')
 
         try:
             connection = OrchestrationConnection.objects.get(id=connection_id)
+
         except OrchestrationConnection.DoesNotExist:
             messages.error(request, "Selected Orchestration connection does not exist.")
             return redirect('chats:orchestration_create')
@@ -64,5 +56,6 @@ class ChatView_OrchestrationCreate(TemplateView):
             connection=connection
         )
         chat.save()
+
         messages.success(request, "Orchestration Chat instance created successfully.")
         return redirect('chats:orchestration_create')

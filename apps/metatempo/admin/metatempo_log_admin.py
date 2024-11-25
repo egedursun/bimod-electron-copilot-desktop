@@ -18,8 +18,12 @@
 from django.contrib import admin
 
 from apps.metatempo.models import MetaTempoLogRecord
-from apps.metatempo.utils import META_TEMPO_LOG_RECORD_ADMIN_LIST, META_TEMPO_LOG_RECORD_ADMIN_FILTER, \
+
+from apps.metatempo.utils import (
+    META_TEMPO_LOG_RECORD_ADMIN_LIST,
+    META_TEMPO_LOG_RECORD_ADMIN_FILTER,
     META_TEMPO_LOG_RECORD_ADMIN_SEARCH
+)
 
 
 @admin.register(MetaTempoLogRecord)

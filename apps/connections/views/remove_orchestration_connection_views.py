@@ -30,18 +30,23 @@ logger = logging.getLogger(__name__)
 class ConnectionView_OrchestrationRemove(TemplateView):
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+
         context['connections'] = OrchestrationConnection.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
         connection_id = request.POST.get('connection_id')
+
         if connection_id:
+
             try:
                 connection = OrchestrationConnection.objects.get(id=connection_id)
                 connection.delete()
                 messages.success(request, "Orchestration connection successfully deleted.")
+
             except OrchestrationConnection.DoesNotExist:
                 messages.error(request, "Orchestration connection not found.")
+
         else:
             messages.error(request, "No Orchestration connection ID provided.")
 

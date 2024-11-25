@@ -13,6 +13,7 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+
 import json
 
 import requests
@@ -27,15 +28,24 @@ from web_project import TemplateLayout
 
 class DashboardView_Leanmod(TemplateView):
     def get_context_data(self, **kwargs):
+
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
         context['available_chats'] = MultimodalLeanmodChat.objects.all()
         chat_id = self.request.GET.get('chat_id')
 
         if chat_id:
-            selected_chat = get_object_or_404(MultimodalLeanmodChat, id=chat_id)
+            selected_chat = get_object_or_404(
+                MultimodalLeanmodChat,
+                id=chat_id
+            )
+
             context['selected_chat'] = selected_chat
-            context['chat_messages'] = MultimodalLeanmodChatMessage.objects.filter(chat=selected_chat).order_by(
-                'sent_at')
+            context['chat_messages'] = MultimodalLeanmodChatMessage.objects.filter(
+                chat=selected_chat
+            ).order_by(
+                'sent_at'
+            )
+
         else:
             context['selected_chat'] = None
             context['chat_messages'] = None
@@ -43,15 +53,18 @@ class DashboardView_Leanmod(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
+
         chat_id = request.POST.get('chat_id')
         message_text = request.POST.get('message_content')
         attached_files = request.POST.get('file_uris')
         attached_images = request.POST.get('image_uris')
+
         if not chat_id or not message_text:
             messages.error(request, "Please provide a chat ID and a message.")
             return redirect('dashboards:leanmod_dashboard')
 
         chat = get_object_or_404(MultimodalLeanmodChat, id=chat_id)
+
         MultimodalLeanmodChatMessage.objects.create(
             chat=chat,
             message_role='user',
@@ -60,7 +73,12 @@ class DashboardView_Leanmod(TemplateView):
             message_image_uris=attached_images
         )
 
-        chat_messages = MultimodalLeanmodChatMessage.objects.filter(chat=chat).order_by('sent_at')
+        chat_messages = MultimodalLeanmodChatMessage.objects.filter(
+            chat=chat
+        ).order_by(
+            'sent_at'
+        )
+
         chat_history = [
             {
                 "role": msg.message_role,
@@ -72,7 +90,11 @@ class DashboardView_Leanmod(TemplateView):
         ]
 
         try:
-            _ = self.get_leanmod_response(chat=chat, chat_history=chat_history)
+            _ = self.get_leanmod_response(
+                chat=chat,
+                chat_history=chat_history
+            )
+
         except Exception as e:
             messages.error(request, f"Error while sending the message: {e}")
             return redirect('dashboards:leanmod_dashboard')
@@ -84,22 +106,45 @@ class DashboardView_Leanmod(TemplateView):
     def get_leanmod_response(chat, chat_history):
         endpoint = chat.connection.connection_endpoint
         api_key = chat.connection.connection_api_key
+
         if api_key and "Bearer" not in api_key:
             api_key = f"Bearer {api_key}"
-        headers = {"Authorization": f"{api_key}", "Content-Type": "application/json"}
-        payload = json.dumps({"chat_history": chat_history})
+
+        headers = {
+            "Authorization": f"{api_key}",
+            "Content-Type": "application/json"
+        }
+
+        payload = json.dumps(
+            {
+                "chat_history": chat_history
+            }
+        )
+
         try:
-            response = requests.post(endpoint, headers=headers, data=payload)
+            response = requests.post(
+                endpoint,
+                headers=headers,
+                data=payload
+            )
+
             response_data = response.json()
             response_data = response_data["data"]
+
             if response.status_code == 200:
                 assistant_message = response_data.get("message", {}).get("content")
+
                 if assistant_message:
+
                     MultimodalLeanmodChatMessage.objects.create(
-                        chat=chat, message_role='assistant', message_text=assistant_message
+                        chat=chat,
+                        message_role='assistant',
+                        message_text=assistant_message
                     )
             else:
                 raise requests.RequestException(f"Error {response.status_code}: {response_data.get('message')}")
+
         except Exception as e:
             raise requests.RequestException(f"Error while sending the message: {e}")
+
         return response

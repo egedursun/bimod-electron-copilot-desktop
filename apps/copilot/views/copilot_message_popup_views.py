@@ -13,15 +13,28 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 
-from apps.chats.models import MultimodalAssistantChatMessage, MultimodalLeanmodChatMessage, \
-    MultimodalOrchestrationChatMessage
+from apps.chats.models import (
+    MultimodalAssistantChatMessage,
+    MultimodalLeanmodChatMessage,
+    MultimodalOrchestrationChatMessage,
+    MultimodalVoidForgerChatMessage
+)
+
 from apps.copilot.models import CopilotModal
 from apps.copilot.utils import CopilotConnectionTypesNames
-from apps.dashboards.views import DashboardView_Assistant, DashboardView_Leanmod, DashboardView_Orchestration
+
+from apps.dashboards.views import (
+    DashboardView_Assistant,
+    DashboardView_Leanmod,
+    DashboardView_Orchestration,
+    DashboardView_VoidForger
+)
+
 from web_project import TemplateLayout, TemplateHelper
 
 
@@ -29,38 +42,87 @@ class CopilotView_MessagePopup(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
-        context.update({
-            "layout": "blank", "layout_path": TemplateHelper.set_layout("layout_blank.html", context),
-            "display_customizer": False})
+
+        context.update(
+            {
+                "layout": "blank",
+                "layout_path": TemplateHelper.set_layout(
+                    "layout_blank.html",
+                    context
+                ),
+                "display_customizer": False
+            }
+        )
 
         copilots = CopilotModal.objects.all()
+
         if not copilots:
             messages.error(self.request, "Copilot is not activated, please first active the copilot.")
             return context
+
         copilot: CopilotModal = copilots.first()
 
         copilot_service_type = copilot.active_connection_type
+
         if copilot_service_type == CopilotConnectionTypesNames.ASSISTANT:
+
             copilot_chat = copilot.selected_assistant_chat
             chat_history = MultimodalAssistantChatMessage.objects.filter(chat=copilot_chat).order_by('sent_at').all()
-            context.update({"chat_item": copilot_chat, "chat_messages": chat_history, "copilot": copilot})
+            context.update(
+                {
+                    "chat_item": copilot_chat,
+                    "chat_messages": chat_history,
+                    "copilot": copilot
+                }
+            )
             return context
+
         elif copilot_service_type == CopilotConnectionTypesNames.LEANMOD:
+
             copilot_chat = copilot.selected_leanmod_chat
             chat_history = MultimodalLeanmodChatMessage.objects.filter(chat=copilot_chat).order_by('sent_at').all()
-            context.update({"chat_item": copilot_chat, "chat_messages": chat_history, "copilot": copilot})
+            context.update(
+                {
+                    "chat_item": copilot_chat,
+                    "chat_messages": chat_history,
+                    "copilot": copilot
+                }
+            )
+
         elif copilot_service_type == CopilotConnectionTypesNames.ORCHESTRATION:
+
             copilot_chat = copilot.selected_orchestration_chat
             chat_history = MultimodalOrchestrationChatMessage.objects.filter(chat=copilot_chat).order_by(
                 'sent_at').all()
-            context.update({"chat_item": copilot_chat, "chat_messages": chat_history, "copilot": copilot})
+            context.update(
+                {
+                    "chat_item": copilot_chat,
+                    "chat_messages": chat_history,
+                    "copilot": copilot
+                }
+            )
+
+        elif copilot_service_type == CopilotConnectionTypesNames.VOIDFORGER:
+
+            copilot_chat = copilot.selected_voidforger_chat
+            chat_history = MultimodalVoidForgerChatMessage.objects.filter(chat=copilot_chat).order_by('sent_at').all()
+            context.update(
+                {
+                    "chat_item": copilot_chat,
+                    "chat_messages": chat_history,
+                    "copilot": copilot
+                }
+            )
+
         else:
             messages.error(self.request, "Copilot service type is not valid.")
             return context
+
         return context
 
     def post(self, request, *args, **kwargs):
         copilots = CopilotModal.objects.all()
+
         if not copilots:
             messages.error(request, "Copilot is not activated, please first active the copilot.")
             return redirect('copilot:message_popup')
@@ -77,11 +139,19 @@ class CopilotView_MessagePopup(TemplateView):
                 copilot_chat = copilot.selected_assistant_chat
 
                 MultimodalAssistantChatMessage.objects.create(
-                    chat=copilot_chat, message_role='user', message_text=message_text,
+                    chat=copilot_chat,
+                    message_role='user',
+                    message_text=message_text,
                     message_file_uris=attached_files,
-                    message_image_uris=attached_images)
+                    message_image_uris=attached_images
+                )
 
-                chat_messages = MultimodalAssistantChatMessage.objects.filter(chat=copilot_chat).order_by('sent_at')
+                chat_messages = MultimodalAssistantChatMessage.objects.filter(
+                    chat=copilot_chat
+                ).order_by(
+                    'sent_at'
+                )
+
                 chat_history = [
                     {
                         "role": msg.message_role,
@@ -93,22 +163,35 @@ class CopilotView_MessagePopup(TemplateView):
                 ]
 
                 _ = DashboardView_Assistant.get_assistant_response(
-                    chat=copilot_chat, chat_history=chat_history)
+                    chat=copilot_chat,
+                    chat_history=chat_history
+                )
+
             except Exception as e:
                 messages.error(request, f"Error while sending the message: {e}")
                 return redirect('copilot:message_popup')
+
             return redirect('copilot:message_popup')
 
         elif copilot_service_type == CopilotConnectionTypesNames.LEANMOD:
+
             try:
                 copilot_chat = copilot.selected_leanmod_chat
 
                 MultimodalLeanmodChatMessage.objects.create(
-                    chat=copilot_chat, message_role='user', message_text=message_text,
+                    chat=copilot_chat,
+                    message_role='user',
+                    message_text=message_text,
                     message_file_uris=attached_files,
-                    message_image_uris=attached_images)
+                    message_image_uris=attached_images
+                )
 
-                chat_messages = MultimodalLeanmodChatMessage.objects.filter(chat=copilot_chat).order_by('sent_at')
+                chat_messages = MultimodalLeanmodChatMessage.objects.filter(
+                    chat=copilot_chat
+                ).order_by(
+                    'sent_at'
+                )
+
                 chat_history = [
                     {
                         "role": msg.message_role,
@@ -119,23 +202,36 @@ class CopilotView_MessagePopup(TemplateView):
                     for msg in chat_messages
                 ]
 
-                _ = DashboardView_Leanmod.get_leanmod_response(chat=copilot_chat, chat_history=chat_history)
+                _ = DashboardView_Leanmod.get_leanmod_response(
+                    chat=copilot_chat,
+                    chat_history=chat_history
+                )
+
             except Exception as e:
                 messages.error(request, f"Error while sending the message: {e}")
                 return redirect('copilot:message_popup')
+
             return redirect('copilot:message_popup')
 
         elif copilot_service_type == CopilotConnectionTypesNames.ORCHESTRATION:
+
             try:
                 copilot_chat = copilot.selected_orchestration_chat
 
                 MultimodalOrchestrationChatMessage.objects.create(
-                    chat=copilot_chat, message_role='user', message_text=message_text,
+                    chat=copilot_chat,
+                    message_role='user',
+                    message_text=message_text,
                     message_file_uris=attached_files,
-                    message_image_uris=attached_images)
+                    message_image_uris=attached_images
+                )
 
-                chat_messages = MultimodalOrchestrationChatMessage.objects.filter(chat=copilot_chat).order_by(
-                    'sent_at')
+                chat_messages = MultimodalOrchestrationChatMessage.objects.filter(
+                    chat=copilot_chat
+                ).order_by(
+                    'sent_at'
+                )
+
                 chat_history = [
                     {
                         "role": msg.message_role,
@@ -146,11 +242,55 @@ class CopilotView_MessagePopup(TemplateView):
                     for msg in chat_messages
                 ]
 
-                _ = DashboardView_Orchestration.get_orchestration_response(chat=copilot_chat,
-                                                                           chat_history=chat_history)
+                _ = DashboardView_Orchestration.get_orchestration_response(
+                    chat=copilot_chat,
+                    chat_history=chat_history
+                )
+
             except Exception as e:
                 messages.error(request, f"Error while sending the message: {e}")
                 return redirect('copilot:message_popup')
+
+            return redirect('copilot:message_popup')
+
+        elif copilot_service_type == CopilotConnectionTypesNames.VOIDFORGER:
+
+            try:
+                copilot_chat = copilot.selected_voidforger_chat
+
+                MultimodalVoidForgerChatMessage.objects.create(
+                    chat=copilot_chat,
+                    message_role='user',
+                    message_text=message_text,
+                    message_file_uris=attached_files,
+                    message_image_uris=attached_images
+                )
+
+                chat_messages = MultimodalVoidForgerChatMessage.objects.filter(
+                    chat=copilot_chat
+                ).order_by(
+                    'sent_at'
+                )
+
+                chat_history = [
+                    {
+                        "role": msg.message_role,
+                        "content": msg.message_text,
+                        "file_uris": msg.message_file_uris,
+                        "image_uris": msg.message_image_uris
+                    }
+                    for msg in chat_messages
+                ]
+
+                _ = DashboardView_VoidForger.get_voidforger_response(
+                    chat=copilot_chat,
+                    chat_history=chat_history
+                )
+
+            except Exception as e:
+                messages.error(request, f"Error while sending the message: {e}")
+                return redirect('copilot:message_popup')
+
             return redirect('copilot:message_popup')
 
         else:

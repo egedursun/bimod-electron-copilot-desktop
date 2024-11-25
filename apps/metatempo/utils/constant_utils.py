@@ -39,19 +39,43 @@ class MetaTempoMemberLogIntervalsNames:
 
     @staticmethod
     def as_list():
-        return [MetaTempoMemberLogIntervalsNames.TIMES_12_PER_HOUR,
-                MetaTempoMemberLogIntervalsNames.TIMES_6_PER_HOUR,
-                MetaTempoMemberLogIntervalsNames.TIMES_4_PER_HOUR,
-                MetaTempoMemberLogIntervalsNames.TIMES_3_PER_HOUR,
-                MetaTempoMemberLogIntervalsNames.TIMES_2_PER_HOUR,
-                MetaTempoMemberLogIntervalsNames.HOURLY,
-                MetaTempoMemberLogIntervalsNames.EVERY_2_HOURS,
-                MetaTempoMemberLogIntervalsNames.EVERY_4_HOURS]
+        return [
+            MetaTempoMemberLogIntervalsNames.TIMES_12_PER_HOUR,
+            MetaTempoMemberLogIntervalsNames.TIMES_6_PER_HOUR,
+            MetaTempoMemberLogIntervalsNames.TIMES_4_PER_HOUR,
+            MetaTempoMemberLogIntervalsNames.TIMES_3_PER_HOUR,
+            MetaTempoMemberLogIntervalsNames.TIMES_2_PER_HOUR,
+            MetaTempoMemberLogIntervalsNames.HOURLY,
+            MetaTempoMemberLogIntervalsNames.EVERY_2_HOURS,
+            MetaTempoMemberLogIntervalsNames.EVERY_4_HOURS
+        ]
 
 
-META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_LIST = ('is_tracking_active', 'member_log_intervals', 'tracking_start_time', 'tracking_end_time')
-META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_FILTER = ('is_tracking_active', 'member_log_intervals', 'tracking_start_time', 'tracking_end_time')
-META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_SEARCH = ('is_tracking_active', 'member_log_intervals', 'tracking_start_time', 'tracking_end_time')
-META_TEMPO_LOG_RECORD_ADMIN_LIST = ('identifier_uuid', 'timestamp')
+META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_LIST = (
+    'is_tracking_active',
+    'member_log_intervals',
+    'tracking_start_time',
+    'tracking_end_time'
+)
+META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_FILTER = (
+    'is_tracking_active',
+    'member_log_intervals',
+    'tracking_start_time',
+    'tracking_end_time'
+)
+META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_SEARCH = (
+    'is_tracking_active',
+    'member_log_intervals',
+    'tracking_start_time',
+    'tracking_end_time'
+)
+
+META_TEMPO_LOG_RECORD_ADMIN_LIST = (
+    'identifier_uuid',
+    'timestamp'
+)
 META_TEMPO_LOG_RECORD_ADMIN_FILTER = ('timestamp',)
-META_TEMPO_LOG_RECORD_ADMIN_SEARCH = ('identifier_uuid', 'timestamp')
+META_TEMPO_LOG_RECORD_ADMIN_SEARCH = (
+    'identifier_uuid',
+    'timestamp'
+)

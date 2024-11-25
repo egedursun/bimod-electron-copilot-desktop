@@ -18,3 +18,4 @@
 from .leanmod_connection_models import *
 from .assistant_connection_models import *
 from .orchestration_connection_models import *
+from .voidforger_connection_models import *

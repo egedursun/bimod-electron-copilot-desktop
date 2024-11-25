@@ -18,7 +18,12 @@
 from django.contrib import admin
 
 from apps.copilot.models import CopilotModal
-from apps.copilot.utils import COPILOT_MODAL_ADMIN_LIST, COPILOT_MODAL_ADMIN_FILTER, COPILOT_MODAL_ADMIN_SEARCH
+
+from apps.copilot.utils import (
+    COPILOT_MODAL_ADMIN_LIST,
+    COPILOT_MODAL_ADMIN_FILTER,
+    COPILOT_MODAL_ADMIN_SEARCH
+)
 
 
 @admin.register(CopilotModal)

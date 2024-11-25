@@ -21,3 +21,5 @@ from .leanmod_chat_models import *
 from .leanmod_chat_message_models import *
 from .orchestration_chat_models import *
 from .orchestration_chat_message_models import *
+from .voidforger_chat_models import *
+from .voidforger_chat_message_models import *

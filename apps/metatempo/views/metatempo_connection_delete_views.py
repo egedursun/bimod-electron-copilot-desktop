@@ -13,6 +13,7 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.views import View
@@ -26,9 +27,11 @@ class MetaTempoView_ConnectionDelete(View):
         return self.post(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+
         try:
             connection = get_object_or_404(MetaTempoConnectionConfiguration)
             connection.delete()
+
         except Exception as e:
             messages.error(request, "Failed to delete MetaTempo connection.")
             return redirect("metatempo:connections_manage")

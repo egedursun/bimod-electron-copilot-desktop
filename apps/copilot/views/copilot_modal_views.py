@@ -22,7 +22,16 @@ class CopilotView_Modal(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
-        context.update({
-            "layout": "blank", "layout_path": TemplateHelper.set_layout("layout_blank.html", context),
-            "display_customizer": False})
+
+        context.update(
+            {
+                "layout": "blank",
+                "layout_path": TemplateHelper.set_layout(
+                    "layout_blank.html",
+                    context
+                ),
+                "display_customizer": False
+            }
+        )
+
         return context

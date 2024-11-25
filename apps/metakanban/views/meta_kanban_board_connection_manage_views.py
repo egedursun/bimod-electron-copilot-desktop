@@ -22,5 +22,6 @@ from web_project import TemplateLayout
 class MetaKanbanView_BoardConnectionManage(TemplateView):
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+
         context['connection'] = MetaKanbanBoardConnection.objects.first()
         return context

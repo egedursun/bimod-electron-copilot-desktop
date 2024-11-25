@@ -30,18 +30,22 @@ logger = logging.getLogger(__name__)
 class ConnectionView_LeanmodRemove(TemplateView):
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+
         context['connections'] = LeanmodConnection.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
         connection_id = request.POST.get('connection_id')
+
         if connection_id:
             try:
                 connection = LeanmodConnection.objects.get(id=connection_id)
                 connection.delete()
                 messages.success(request, "LeanMod connection successfully deleted.")
+
             except LeanmodConnection.DoesNotExist:
                 messages.error(request, "LeanMod connection not found.")
+
         else:
             messages.error(request, "No connection ID provided.")
 

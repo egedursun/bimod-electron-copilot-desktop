@@ -31,12 +31,15 @@ class MetaKanbanView_BoardConnectionCreate(View):
 
         try:
             connection, created = MetaKanbanBoardConnection.objects.get_or_create(
-                defaults={'board_connection_api_key': api_key}
+                defaults={
+                    'board_connection_api_key': api_key
+                }
             )
 
             if not created:
                 connection.board_connection_api_key = api_key
                 connection.save()
+
         except Exception as e:
             messages.error(request, "Failed to create MetaKanban Board connection.")
             return redirect("metakanban:connection_manage")

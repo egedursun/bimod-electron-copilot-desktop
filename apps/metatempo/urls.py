@@ -22,9 +22,23 @@ from apps.metatempo.views import (MetaTempoView_ConnectionCreate, MetaTempoView_
 app_name = 'metatempo'
 
 urlpatterns = [
-    path('board/connection/create/', MetaTempoView_ConnectionCreate.as_view(), name='connection_create'),
-    path('board/connection/delete/', MetaTempoView_ConnectionDelete.as_view(), name='connection_delete'),
-    path('board/connections/manage/', MetaTempoView_ConnectionManage.as_view(
-        template_name='metatempo/metatempo_board_connection.html'
-    ), name='connections_manage'),
+    path(
+        'board/connection/create/',
+        MetaTempoView_ConnectionCreate.as_view(),
+        name='connection_create'
+    ),
+
+    path(
+        'board/connection/delete/',
+        MetaTempoView_ConnectionDelete.as_view(),
+        name='connection_delete'
+    ),
+
+    path(
+        'board/connections/manage/',
+        MetaTempoView_ConnectionManage.as_view(
+            template_name='metatempo/metatempo_board_connection.html'
+        ),
+        name='connections_manage'
+    ),
 ]

@@ -18,8 +18,12 @@
 from django.contrib import admin
 
 from apps.metatempo.models import MetaTempoConnectionConfiguration
-from apps.metatempo.utils import META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_LIST, \
-    META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_FILTER, META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_SEARCH
+
+from apps.metatempo.utils import (
+    META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_LIST,
+    META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_FILTER,
+    META_TEMPO_CONNECTION_CONFIGURATION_ADMIN_SEARCH
+)
 
 
 @admin.register(MetaTempoConnectionConfiguration)

@@ -13,6 +13,7 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+
 from django.views.generic import TemplateView
 
 from django.contrib import messages

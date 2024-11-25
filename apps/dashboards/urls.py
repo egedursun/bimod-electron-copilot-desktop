@@ -13,20 +13,57 @@
 #  Holdings.
 #
 #   For permission inquiries, please contact: admin@Bimod.io.
+
 from django.urls import path
 
-from apps.dashboards.views import (DashboardView_Assistant, DashboardView_Leanmod, DashboardView_Orchestration,
-                                   DashboardView_Index)
+from apps.dashboards.views import (
+    DashboardView_Assistant,
+    DashboardView_Leanmod,
+    DashboardView_Orchestration,
+    DashboardView_VoidForger,
+    DashboardView_Index,
+)
 
 app_name = 'dashboards'
 
 urlpatterns = [
-    path("", DashboardView_Index.as_view(template_name='dashboards/index.html'), name='index'),
-    path('assistant/', DashboardView_Assistant.as_view(template_name='dashboards/assistant_dashboard.html'),
-         name='assistant_dashboard'),
-    path('leanmod/', DashboardView_Leanmod.as_view(template_name='dashboards/leanmod_dashboard.html'),
-         name='leanmod_dashboard'),
-    path('orchestration/',
-         DashboardView_Orchestration.as_view(template_name='dashboards/orchestration_dashboard.html'),
-         name='orchestration_dashboard'),
+    path(
+        "",
+        DashboardView_Index.as_view(
+            template_name='dashboards/index.html'
+        ),
+        name='index'
+    ),
+
+    path(
+        'assistant/',
+        DashboardView_Assistant.as_view(
+            template_name='dashboards/assistant_dashboard.html'
+        ),
+        name='assistant_dashboard'
+    ),
+
+    path(
+        'leanmod/',
+        DashboardView_Leanmod.as_view(
+            template_name='dashboards/leanmod_dashboard.html'
+        ),
+        name='leanmod_dashboard'
+    ),
+
+    path(
+        'orchestration/',
+        DashboardView_Orchestration.as_view(
+            template_name='dashboards/orchestration_dashboard.html'
+        ),
+        name='orchestration_dashboard'
+    ),
+
+    path(
+        'voidforger/',
+        DashboardView_VoidForger.as_view(
+            template_name='dashboards/voidforger_dashboard.html'
+        ),
+        name='voidforger_dashboard'
+    ),
 ]

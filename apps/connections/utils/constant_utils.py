@@ -15,25 +15,75 @@
 #   For permission inquiries, please contact: admin@Bimod.io.
 
 
-ASSISTANT_CONNECTION_ADMIN_LIST = ['connection_endpoint', 'connection_is_public', 'connection_api_key',
-                                   'created_at']
-ASSISTANT_CONNECTION_ADMIN_FILTER = ['connection_is_public', 'created_at']
-ASSISTANT_CONNECTION_ADMIN_SEARCH = ['connection_endpoint', 'connection_api_key', 'created_at']
+ASSISTANT_CONNECTION_ADMIN_LIST = [
+    'connection_endpoint',
+    'connection_is_public',
+    'connection_api_key',
+    'created_at'
+]
+ASSISTANT_CONNECTION_ADMIN_FILTER = [
+    'connection_is_public',
+    'created_at'
+]
+ASSISTANT_CONNECTION_ADMIN_SEARCH = [
+    'connection_endpoint',
+    'connection_api_key',
+    'created_at'
+]
 
-LEANMOD_CONNECTION_ADMIN_LIST = ["connection_endpoint", "connection_is_public", "connection_api_key",
-                                 "created_at"]
-LEANMOD_CONNECTION_ADMIN_FILTER = ["connection_is_public", "created_at"]
-LEANMOD_CONNECTION_ADMIN_SEARCH = ["connection_endpoint", "connection_api_key", "created_at"]
+LEANMOD_CONNECTION_ADMIN_LIST = [
+    "connection_endpoint",
+    "connection_is_public",
+    "connection_api_key",
+    "created_at"
+]
+LEANMOD_CONNECTION_ADMIN_FILTER = [
+    "connection_is_public",
+    "created_at"
+]
+LEANMOD_CONNECTION_ADMIN_SEARCH = [
+    "connection_endpoint",
+    "connection_api_key",
+    "created_at"
+]
 
-ORCHESTRATION_CONNECTION_ADMIN_LIST = ['connection_endpoint', 'connection_is_public', 'connection_api_key',
-                                       'created_at']
-ORCHESTRATION_CONNECTION_ADMIN_FILTER = ['connection_is_public', 'created_at']
-ORCHESTRATION_CONNECTION_ADMIN_SEARCH = ['connection_endpoint', 'connection_api_key', 'created_at']
+ORCHESTRATION_CONNECTION_ADMIN_LIST = [
+    'connection_endpoint',
+    'connection_is_public',
+    'connection_api_key',
+    'created_at'
+]
+ORCHESTRATION_CONNECTION_ADMIN_FILTER = [
+    'connection_is_public',
+    'created_at'
+]
+ORCHESTRATION_CONNECTION_ADMIN_SEARCH = [
+    'connection_endpoint',
+    'connection_api_key',
+    'created_at'
+]
+
+VOIDFORGER_CONNECTION_ADMIN_LIST = [
+    'connection_endpoint',
+    'connection_is_public',
+    'connection_api_key',
+    'created_at'
+]
+VOIDFORGER_CONNECTION_ADMIN_FILTER = [
+    'connection_is_public',
+    'created_at'
+]
+VOIDFORGER_CONNECTION_ADMIN_SEARCH = [
+    'connection_endpoint',
+    'connection_api_key',
+    'created_at'
+]
 
 CONNECTION_TYPES = [
     ('assistant', 'Assistant'),
     ('leanmod', 'Leanmod'),
     ('orchestration', 'Orchestration'),
+    ('voidforger', 'VoidForger')
 ]
 
 
@@ -44,4 +94,8 @@ class ConnectionTypesNames:
 
     @staticmethod
     def as_list():
-        return [ConnectionTypesNames.ASSISTANT, ConnectionTypesNames.LEANMOD, ConnectionTypesNames.ORCHESTRATION]
+        return [
+            ConnectionTypesNames.ASSISTANT,
+            ConnectionTypesNames.LEANMOD,
+            ConnectionTypesNames.ORCHESTRATION
+        ]

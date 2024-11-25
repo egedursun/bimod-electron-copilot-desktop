@@ -22,9 +22,16 @@ from apps.chats.utils import CHAT_ROLES, ChatRolesNames
 
 
 class MultimodalAssistantChatMessage(models.Model):
-    chat = models.ForeignKey('chats.MultimodalAssistantChat', on_delete=models.CASCADE,
-                             related_name='assistant_messages')
-    message_role = models.CharField(max_length=200, choices=CHAT_ROLES, default=ChatRolesNames.SYSTEM)
+    chat = models.ForeignKey(
+        'chats.MultimodalAssistantChat',
+        on_delete=models.CASCADE,
+        related_name='assistant_messages'
+    )
+    message_role = models.CharField(
+        max_length=200,
+        choices=CHAT_ROLES,
+        default=ChatRolesNames.SYSTEM
+    )
 
     message_text = models.TextField(blank=True, null=True)
     message_file_uris = models.TextField(blank=True, null=True)
@@ -40,5 +47,9 @@ class MultimodalAssistantChatMessage(models.Model):
         verbose_name_plural = "Multimodal Assistant Chat Messages"
         ordering = ["-sent_at"]
         indexes = [
-            models.Index(fields=["sent_at"]),
+            models.Index(
+                fields=[
+                    "sent_at"
+                ]
+            ),
         ]

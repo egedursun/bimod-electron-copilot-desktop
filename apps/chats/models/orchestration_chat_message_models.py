@@ -22,9 +22,16 @@ from apps.chats.utils import CHAT_ROLES, ChatRolesNames
 
 
 class MultimodalOrchestrationChatMessage(models.Model):
-    chat = models.ForeignKey('chats.MultimodalOrchestrationChat', on_delete=models.CASCADE,
-                             related_name='orchestration_messages')
-    message_role = models.CharField(max_length=200, choices=CHAT_ROLES, default=ChatRolesNames.SYSTEM)
+    chat = models.ForeignKey(
+        'chats.MultimodalOrchestrationChat',
+        on_delete=models.CASCADE,
+        related_name='orchestration_messages'
+    )
+    message_role = models.CharField(
+        max_length=200,
+        choices=CHAT_ROLES,
+        default=ChatRolesNames.SYSTEM
+    )
 
     message_text = models.TextField(blank=True, null=True)
     message_file_uris = models.TextField(blank=True, null=True)
@@ -40,5 +47,9 @@ class MultimodalOrchestrationChatMessage(models.Model):
         verbose_name_plural = "Multimodal Orchestration Chat Messages"
         ordering = ["-sent_at"]
         indexes = [
-            models.Index(fields=["sent_at"]),
+            models.Index(
+                fields=[
+                    "sent_at"
+                ]
+            ),
         ]

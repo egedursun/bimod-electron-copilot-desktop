@@ -46,35 +46,38 @@ class ConnectionView_LeanmodCreate(TemplateView):
         if not connection_endpoint:
             messages.error(request, "LeanMod connection endpoint is required.")
             return redirect('connections:leanmod_create')
+
         if not connection_is_public and not connection_api_key:
             messages.error(request, "API key is required when LeanMod connection is not public.")
             return redirect('connections:leanmod_create')
 
-        health_check_url = connection_endpoint.replace("app", "health")
-        if health_check_url.endswith("/"):
-            health_check_url = health_check_url[:-1]
-        if connection_api_key and "Bearer" not in connection_api_key:
-            connection_api_key = f"Bearer {connection_api_key}"
-        headers = {"Authorization": f"{connection_api_key}"} if connection_api_key else {}
+        health_check_url = connection_endpoint.replace("exported", "health")
+
         try:
-            response = requests.post(health_check_url, headers=headers)
+            response = requests.post(health_check_url)
+
             if response.status_code != 200:
                 try:
                     error_message = response.json().get('message', 'The endpoint did not pass the health check.')
+
                 except ValueError:
                     error_message = "Received a non-JSON response from the health check endpoint."
+
                 messages.error(request, f"Health check failed: {error_message}")
                 return redirect('connections:leanmod_create')
+
         except requests.RequestException as e:
             messages.error(request, f"Could not connect to the endpoint. Please check the URL and network: {e}")
             return redirect('connections:leanmod_create')
 
         try:
             new_connection = LeanmodConnection(
-                connection_endpoint=connection_endpoint, connection_is_public=connection_is_public,
+                connection_endpoint=connection_endpoint,
+                connection_is_public=connection_is_public,
                 connection_api_key=connection_api_key
             )
             new_connection.save()
+
         except Exception as e:
             logger.error(f"Error creating LeanMod connection: {e}")
             messages.error(request, f"Error creating LeanMod connection: {e}")

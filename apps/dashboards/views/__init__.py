@@ -18,3 +18,4 @@ from .assistant_dashboard_views import *
 from .leanmod_dashboard_views import *
 from .orchestration_dashboard_views import *
 from .index_views import *
+from .voidforger_dashboard_views import *

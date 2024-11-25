@@ -16,8 +16,11 @@
 from django.contrib import admin
 
 from apps.chats.models import MultimodalLeanmodChatMessage
-from apps.chats.utils import MULTIMODAL_LEANMOD_CHAT_MESSAGE_ADMIN_LIST, MULTIMODAL_LEANMOD_CHAT_MESSAGE_ADMIN_FILTER, \
+from apps.chats.utils import (
+    MULTIMODAL_LEANMOD_CHAT_MESSAGE_ADMIN_LIST,
+    MULTIMODAL_LEANMOD_CHAT_MESSAGE_ADMIN_FILTER,
     MULTIMODAL_LEANMOD_CHAT_MESSAGE_ADMIN_SEARCH
+)
 
 
 @admin.register(MultimodalLeanmodChatMessage)

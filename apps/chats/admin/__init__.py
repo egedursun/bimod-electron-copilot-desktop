@@ -20,3 +20,5 @@ from .leanmod_chat_admin import *
 from .leanmod_chat_message_admin import *
 from .orchestration_chat_admin import *
 from .orchestration_chat_message_admin import *
+from .voidforger_chat_admin import *
+from .voidforger_chat_message_admin import *
