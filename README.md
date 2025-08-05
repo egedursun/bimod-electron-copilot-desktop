@@ -66,19 +66,3 @@ sudo npx electron electron.js
 ```
 
 ---
-
-### TODO LIST
-
-- [ ] Sox bağımlığını çöz, uygulama içine paket olarak ekle. 
-- [ ] Çalışıp çalışmadığını test et.
-- [ ] Design the web page to download the Electron Copilot (and marketing content)
-- [ ] Develop Content on Main Landing Page + Connect the page with the main page. (MetaKanban, Project/Teams, MetaTempo)
-- [ ] Push the changes in the main server.
-- [ ] Create a label for version on GitHub
-- [ ] Update the GitHub board.
-
----
-
-**RELEASE 5**
-
----
